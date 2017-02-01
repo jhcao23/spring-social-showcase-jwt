@@ -1,0 +1,28 @@
+spring:
+  social:
+    facebook:
+      app-id: 1564824140411615
+      app-secret: bb96164ffa816c65fc14f82fae38c914
+    twitter:
+      app-id: yix4Ai9xDbWBKV3yFPFGs8Nkf
+      app-secret: 9rXtdeYe5v3wmGR5E96ubiXRDeWzZFgRt2ZYdgSKeQFivw0OtD
+  datasource:
+      url: jdbc:mysql://localhost:3306/spring_social_test?autoReconnect=true&useSSL=false
+      username: spring
+      password: spring
+      driver-class-name: com.mysql.jdbc.Driver
+  data:
+    jpa:
+      repositories:
+        enabled: true
+  jpa:
+    show-sql: true
+    hibernate:
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+logging:
+  level:
+    org.springframework.social: TRACE
+    org.springframework.social.showcase: TRACE    
+    org.thymeleaf: TRACE    
+    

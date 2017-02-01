@@ -1,0 +1,62 @@
+buildscript {
+  repositories {
+    maven { url "http://repo.spring.io/libs-milestone" }
+    maven { url "http://repo.spring.io/libs-snapshot" }
+    mavenLocal()
+  }
+  dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.1.RELEASE")
+  }
+}
+
+apply plugin: 'eclipse'
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
+jar {
+  baseName = 'spring-social-showcase'
+}
+
+eclipse {
+  jdt {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+  }
+}
+
+repositories {
+  mavenLocal()
+  maven { url "http://repo.spring.io/milestone" }
+  mavenCentral()
+  maven { url "http://repo.spring.io/libs-milestone" }
+}
+
+dependencies {
+
+  compile("org.springframework.boot:spring-boot-starter-social-facebook")
+  compile("org.springframework.boot:spring-boot-starter-social-twitter")
+  compile("org.springframework.social:spring-social-security")
+  compile("org.springframework.social:spring-social-core")
+  compile("org.springframework.boot:spring-boot-starter-security")
+  compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+  compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity4:2.1.2.RELEASE")
+  compile("org.springframework.boot:spring-boot-starter-web")
+  compile("org.springframework.boot:spring-boot-starter-jdbc")
+  compile("org.springframework.boot:spring-boot-starter-data-jpa")
+  //compile("com.h2database:h2")
+  compile("mysql:mysql-connector-java")
+  compile("com.auth0:java-jwt:3.1.0")
+  
+  compile("org.webjars:bootstrap:3.3.6")
+
+  compile("org.springframework.boot:spring-boot-starter-actuator")
+  compile("org.springframework.boot:spring-boot-devtools")
+  
+  testCompile("org.springframework.boot:spring-boot-starter-test")
+  
+  
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.0'
+}
