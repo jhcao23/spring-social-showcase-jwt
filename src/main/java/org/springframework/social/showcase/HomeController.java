@@ -39,12 +39,13 @@ public class HomeController {
 	public String home(Principal currentUser, Model model) {
 		ConnectionRepository cp = getConnectionRepository();
 		System.out.println("ConnectionRepository==null::"+(cp.getClass()));
-		model.addAttribute("connectionsToProviders", cp.findAllConnections());
+//		model.addAttribute("connectionsToProviders", cp.findAllConnections());
 		if (currentUser != null) {
 			model.addAttribute(userRepository.findByHashId(currentUser.getName()));
 		}
 		return "home";
 	}
+	
 	
 	private ConnectionRepository getConnectionRepository() {
 		return connectionRepositoryProvider.get();

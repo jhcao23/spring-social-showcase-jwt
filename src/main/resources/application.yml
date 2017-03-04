@@ -1,3 +1,5 @@
+server:
+  port: 9090
 spring:
   social:
     facebook:
@@ -24,5 +26,6 @@ logging:
   level:
     org.springframework.social: TRACE
     org.springframework.social.showcase: TRACE    
-    org.thymeleaf: TRACE    
+    org.thymeleaf: TRACE
+    org.springframework.security.web.authentication: TRACE 
     

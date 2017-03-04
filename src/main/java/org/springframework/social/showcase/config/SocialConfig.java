@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
+import org.springframework.security.web.authentication.JwtSocialAuthenticationSuccessHandler;
 import org.springframework.social.UserIdSource;
 import org.springframework.social.config.annotation.SocialConfigurerAdapter;
 import org.springframework.social.connect.ConnectionFactoryLocator;
@@ -59,7 +60,14 @@ public class SocialConfig extends SocialConfigurerAdapter{
 		return new AuthenticationNameUserHashIdSource(userRepository);
 	}
     
+    
+    
     //TODO: removed ProviderSignInUtils & ConnectController beans so that fresh social login 
     //		won't trigger UserDetailsService.loadUserByUsername, why?
-
+    
+    @Bean
+    public JwtSocialAuthenticationSuccessHandler getJwtSocialAuthenticationSuccessHandler(){
+    	return new JwtSocialAuthenticationSuccessHandler(userRepository);
+    }
+   
 }

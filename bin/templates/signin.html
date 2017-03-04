@@ -67,6 +67,14 @@
 				<input type="hidden" name="scope" value="email, user_about_me, public_profile, user_friends, user_posts,user_photos"></input>
 				<button type="submit"><img th:src="@{/social/facebook/sign-in-with-facebook.png}"></img></button>
 			</form>
+			<p>
+				<a th:href="@{/auth/facebook}">
+					<img 
+						th:src="@{/social/facebook/sign-in-with-facebook.png}"
+						border="0"
+					/>
+				</a>
+			</p>
 	      </div>
 		</div>	
 	</body>

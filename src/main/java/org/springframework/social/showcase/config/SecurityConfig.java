@@ -18,17 +18,27 @@ package org.springframework.social.showcase.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+//import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.JwtAuthenticationFilter;
+import org.springframework.security.web.authentication.JwtSocialAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.JwtUsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
+import org.springframework.social.UserIdSource;
+import org.springframework.social.security.SocialAuthenticationFilter;
 import org.springframework.social.security.SpringSocialConfigurer;
+import org.springframework.social.showcase.account.UserRepository;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 
 /**
@@ -40,18 +50,24 @@ import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
+	private UserIdSource userIdSource;
+	@Autowired
+	private JwtSocialAuthenticationSuccessHandler jwtSocialAuthenticationSuccessHandler;
+	
+	@Autowired
+	private UserRepository userRepository;
+	@Autowired
 	private UserDetailsService userDetailsService;
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web
-			.ignoring()
-				.antMatchers("/**/*.css", "/**/*.png", "/**/*.gif", "/**/*.jpg");
+		web.ignoring().antMatchers("/**/*.css", "/**/*.png", "/**/*.gif", "/**/*.jpg");
 	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
+//			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 			.formLogin()
 				.loginPage("/signin")
 				.usernameParameter("username")
@@ -68,11 +84,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.and()
 				.authorizeRequests()
 					.antMatchers("/", "/webjars/**", "/admin/**", "/favicon.ico", "/resources/**", "/auth/**", "/signin/**", "/signup/**", "/disconnect/facebook").permitAll()
-					.antMatchers("/**").authenticated()
+					.antMatchers("/**").authenticated()	
 			.and()
 				.rememberMe()
 			.and()
-	            .apply(new SpringSocialConfigurer())
+				.addFilterBefore(new JwtAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class)
+            	.addFilterBefore(getUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+				.apply(getSpringSocialConfigurer())
 			;
 	}
 	
@@ -98,5 +116,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	public SpringSecurityDialect springSecurityDialect() {
 		return new SpringSecurityDialect();
 	}
+	
+	 //JWT Stateless
+
+    public JwtUsernamePasswordAuthenticationFilter getUsernamePasswordAuthenticationFilter() throws Exception{
+    	JwtUsernamePasswordAuthenticationFilter filter = new JwtUsernamePasswordAuthenticationFilter(userRepository);
+    	filter.setAuthenticationManager(this.authenticationManager());
+    	return filter;
+    }
+    
+    public SpringSocialConfigurer getSpringSocialConfigurer(){
+    	SpringSocialConfigurer ssc = new SpringSocialConfigurer();
+    	ssc.userIdSource(userIdSource);
+    	ssc.addObjectPostProcessor(new ObjectPostProcessor<SocialAuthenticationFilter>(){
+    		@Override
+			public <O extends SocialAuthenticationFilter> O postProcess(O filter){
+				filter.setAuthenticationSuccessHandler(jwtSocialAuthenticationSuccessHandler);
+				return filter;
+			}
+		 });
+    	return ssc;
+    }
 
 }
