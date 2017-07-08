@@ -37,15 +37,16 @@ public class HomeController {
 
 	@RequestMapping("/")
 	public String home(Principal currentUser, Model model) {
-		ConnectionRepository cp = getConnectionRepository();
-		System.out.println("ConnectionRepository==null::"+(cp.getClass()));
-//		model.addAttribute("connectionsToProviders", cp.findAllConnections());
 		if (currentUser != null) {
-			model.addAttribute(userRepository.findByHashId(currentUser.getName()));
+			ConnectionRepository cp = getConnectionRepository();
+			System.out.println("ConnectionRepository==null::"+(cp.getClass()));
+//			model.addAttribute("connectionsToProviders", cp.findAllConnections());
+			if (currentUser != null) {
+				model.addAttribute(userRepository.findByHashId(currentUser.getName()));
+			}
 		}
 		return "home";
 	}
-	
 	
 	private ConnectionRepository getConnectionRepository() {
 		return connectionRepositoryProvider.get();

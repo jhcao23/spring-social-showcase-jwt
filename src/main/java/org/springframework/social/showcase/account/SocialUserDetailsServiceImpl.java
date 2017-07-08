@@ -28,7 +28,7 @@ public class SocialUserDetailsServiceImpl implements SocialUserDetailsService {
 	    grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));	    
 		return new SocialUser(
 			userHashId, 
-			user.get().getAccount()==null?null:user.get().getAccount().getPassword(), 
+			user.get().getAccount()==null?"":user.get().getAccount().getPassword(), //TODO: empty password MIGHT be an issue
 			grantedAuthorities
 		);
 	}

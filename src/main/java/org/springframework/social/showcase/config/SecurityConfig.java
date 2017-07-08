@@ -69,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http
 //			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 			.formLogin()
-				.loginPage("/signin")
+				.loginPage("/login")			//"signin" will cause a crazy error
 				.usernameParameter("username")
 				.passwordParameter("password")
 				.loginProcessingUrl("/signin/authenticate")
@@ -84,7 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.and()
 				.authorizeRequests()
 					.antMatchers("/", "/webjars/**", "/admin/**", "/favicon.ico", "/resources/**", "/auth/**", "/signin/**", "/signup/**", "/disconnect/facebook").permitAll()
-					.antMatchers("/**").authenticated()	
+					.antMatchers("/**").authenticated()
 			.and()
 				.rememberMe()
 			.and()

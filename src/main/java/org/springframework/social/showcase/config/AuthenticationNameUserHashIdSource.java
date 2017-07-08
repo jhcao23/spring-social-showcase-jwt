@@ -41,7 +41,8 @@ public class AuthenticationNameUserHashIdSource extends AuthenticationNameUserId
 	@Override
 	public String getUserId() {
 		String username = super.getUserId();
-		Optional<User> user = userRepository.findByHashIdOrAccountUsername(username, username);
+//		Optional<User> user = userRepository.findByHashIdOrAccountUsername(username, username);	//anonymousUser
+		Optional<User> user = userRepository.findByHashId(username);
 		if(!user.isPresent()){
 			throw new IllegalStateException("Unable to get a ConnectionRepository: no user signed in::"+username);
 		}else{

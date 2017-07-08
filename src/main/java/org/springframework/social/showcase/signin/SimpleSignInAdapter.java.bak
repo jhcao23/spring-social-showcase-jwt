@@ -40,9 +40,7 @@ public class SimpleSignInAdapter implements SignInAdapter {
 	
 	@Override
 	public String signIn(String localUserId, Connection<?> connection, NativeWebRequest request) {
-		SecurityContextHolder.getContext().setAuthentication(
-			new UsernamePasswordAuthenticationToken(localUserId, null, null)
-		);
+		SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(localUserId, null, null));
 		return extractOriginalUrl(request);
 	}
 

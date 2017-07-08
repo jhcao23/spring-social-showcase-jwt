@@ -33,14 +33,16 @@ public class SocialConfig extends SocialConfigurerAdapter{
 
 	@Override
     public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
-        return new 
+		JpaUsersConnectionRepository usersConnectionRepository = new 
 			JpaUsersConnectionRepository(
 				userRepository, 
 				userConnectionRepository, 
 				getAdvancedUserConnectionRepository(),
 				connectionFactoryLocator, 
 				textEncryptor
-			);        		
+			);        	
+		usersConnectionRepository.setConnectionSignUp(getConnectionSignUp());
+		return usersConnectionRepository;
 	}	
 	@Bean
 	public AdvancedUserConnectionRepository getAdvancedUserConnectionRepository(){
@@ -59,8 +61,6 @@ public class SocialConfig extends SocialConfigurerAdapter{
 	public UserIdSource getUserIdSource() {
 		return new AuthenticationNameUserHashIdSource(userRepository);
 	}
-    
-    
     
     //TODO: removed ProviderSignInUtils & ConnectController beans so that fresh social login 
     //		won't trigger UserDetailsService.loadUserByUsername, why?

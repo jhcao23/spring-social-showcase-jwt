@@ -23,5 +23,4 @@ public class RestController {
 		return userRepository.count();		
 	}
 	
-	
 }

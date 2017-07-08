@@ -78,7 +78,7 @@
               </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li sec:authorize="!isAuthenticated()"><a th:href="@{/signin}">Sign In</a></li>
+              <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Sign In</a></li>
               <li sec:authorize="isAuthenticated()"><a href="javascript:document.logoutForm.submit();">Sign out <span sec:authentication="name">Bob</span></a></li>
             </ul>
             <form method="POST" th:action="@{/signout}" name="logoutForm"></form>
