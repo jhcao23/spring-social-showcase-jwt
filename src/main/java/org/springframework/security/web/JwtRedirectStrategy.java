@@ -18,7 +18,7 @@ public class JwtRedirectStrategy extends DefaultRedirectStrategy{
 		redirectUrl = response.encodeRedirectURL(redirectUrl);
 
 		if (logger.isDebugEnabled()) {
-			logger.debug("Redirecting to '" + redirectUrl + "'");
+			logger.debug("Browser should be Redirecting to '" + redirectUrl + "'");
 		}
 		
 		//JWT Strategy doesn't like redirect otherwise JS won't catch the JWT header

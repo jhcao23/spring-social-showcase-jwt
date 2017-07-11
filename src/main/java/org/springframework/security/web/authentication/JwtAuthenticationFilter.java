@@ -35,8 +35,8 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if(authentication==null){
 	        final String authHeader = request.getHeader(JwtTokenService.AUTHORIZATION);
-	        if(authHeader!=null && authHeader.trim().startsWith(JwtTokenService.BEARER)){
-	        	String token = StringUtils.trimLeadingWhitespace(authHeader.substring(JwtTokenService.BEARER.length()));
+	        final String token = getTokenFromHeader(authHeader);
+	        if(token!=null){
 	        	String hashId = JwtTokenService.getHashId(token);
 	        	if(hashId!=null){
 	        		SecurityContextHolder.getContext().setAuthentication(
@@ -48,6 +48,15 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 	        	}
 	        }
 		}
+		
+	}
+	
+	private String getTokenFromHeader(String authHeader){
+		if(authHeader!=null && authHeader.trim().startsWith(JwtTokenService.BEARER)){
+        	String token = StringUtils.trimLeadingWhitespace(authHeader.substring(JwtTokenService.BEARER.length()));
+        	return token;
+		}
+		return null;
 		
 	}
 

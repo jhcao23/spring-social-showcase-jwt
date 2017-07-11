@@ -89,7 +89,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.rememberMe()
 			.and()
 				.addFilterBefore(new JwtAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class)
-            	.addFilterBefore(getUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+            	.addFilterBefore(getJwtUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 				.apply(getSpringSocialConfigurer())
 			;
 	}
@@ -119,7 +119,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	 //JWT Stateless
 
-    public JwtUsernamePasswordAuthenticationFilter getUsernamePasswordAuthenticationFilter() throws Exception{
+    public JwtUsernamePasswordAuthenticationFilter getJwtUsernamePasswordAuthenticationFilter() throws Exception{
     	JwtUsernamePasswordAuthenticationFilter filter = new JwtUsernamePasswordAuthenticationFilter(userRepository);
     	filter.setAuthenticationManager(this.authenticationManager());
     	return filter;

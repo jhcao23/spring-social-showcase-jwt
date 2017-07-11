@@ -1,5 +1,5 @@
 server:
-  port: 9090
+  port: 8080
 spring:
   social:
     facebook:
@@ -27,5 +27,5 @@ logging:
     org.springframework.social: TRACE
     org.springframework.social.showcase: TRACE    
     org.thymeleaf: TRACE
-    org.springframework.security.web.authentication: TRACE 
-    
+    org.springframework.security.web: TRACE
+    org.springframework.security.web.authentication: TRACE    

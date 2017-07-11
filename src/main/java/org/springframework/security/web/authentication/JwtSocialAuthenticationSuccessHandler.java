@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.Optional;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,6 +18,14 @@ import org.springframework.social.showcase.account.User;
 import org.springframework.social.showcase.account.UserRepository;
 import org.springframework.util.StringUtils;
 
+/**
+ * rather than extending the SavedRequestAwareAuthenticationSuccessHandler,
+ * it should extend the simpler version - SimpleUrlAuthenticationSuccessHandler.
+ * This is because we will assume angular/mobile will handle the process to redirect to the very initial request.
+ * 
+ * @author jhcao
+ *
+ */
 public class JwtSocialAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
 	private static final Logger logger = LoggerFactory.getLogger(JwtSocialAuthenticationSuccessHandler.class);

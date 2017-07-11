@@ -15,7 +15,11 @@
  */
 package org.springframework.social.showcase.signup;
 
+import static org.springframework.social.showcase.config.JwtTokenService.AUTH_HEADER_NAME;
+import static org.springframework.social.showcase.config.JwtTokenService.getToken4User;
+
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +66,7 @@ public class SignupController {
 	}
 
 	@RequestMapping(value="/signup", method=RequestMethod.POST)
-	public String signup(@Valid SignupForm form, BindingResult formBinding, WebRequest request) {
+	public String signup(@Valid SignupForm form, BindingResult formBinding, WebRequest request, HttpServletResponse response) {
 		if (formBinding.hasErrors()) {
 			return null;
 		}
@@ -72,7 +76,9 @@ public class SignupController {
 				new UsernamePasswordAuthenticationToken(user.getHashId(), null, null)
 			);
 			providerSignInUtils.doPostSignUp(user.getHashId(), request);
-			return "redirect:/";
+			String token = getToken4User(user);
+			response.addHeader(AUTH_HEADER_NAME, token);
+			return null;
 		}
 		return null;
 	}

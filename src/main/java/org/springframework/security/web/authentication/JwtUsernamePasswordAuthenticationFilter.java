@@ -25,6 +25,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import static org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY;
 import static org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY;
 
+/**
+ * Learn from UsernamePasswordAuthenticationFilter from Spring Security,
+ * plus override AbstractAuthenticationProcessingFilter.successfulAuthentication.
+ *  
+ * @author jhcao
+ *
+ */
 public class JwtUsernamePasswordAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
 	private String usernameParameter = SPRING_SECURITY_FORM_USERNAME_KEY;
@@ -38,6 +45,8 @@ public class JwtUsernamePasswordAuthenticationFilter extends AbstractAuthenticat
 		this.userRepository = userRepository;
 	}
 
+	//TODO: consider to use super.successfulAuthentication (remove this method)
+	//but set a different successHandler called JwtUsernamePasswordAuthenticationSuccessHandler?
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request,
 			HttpServletResponse response, FilterChain chain, Authentication authResult)
