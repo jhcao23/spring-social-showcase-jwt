@@ -1,10 +1,9 @@
-package org.springframework.social.showcase.config;
+package org.springframework.social.showcase.service;
 
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionSignUp;
-import org.springframework.social.showcase.account.GenerateUniqueKey;
-import org.springframework.social.showcase.account.User;
-import org.springframework.social.showcase.account.UserRepository;
+import org.springframework.social.showcase.model.User;
+import org.springframework.social.showcase.repository.UserRepository;
 
 public class JpaConnectionSignUp implements ConnectionSignUp {
 

@@ -16,10 +16,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.social.showcase.account.Account;
-import org.springframework.social.showcase.account.User;
-import org.springframework.social.showcase.account.UserRepository;
-import org.springframework.social.showcase.config.JwtTokenService;
+import org.springframework.social.showcase.model.Account;
+import org.springframework.social.showcase.model.User;
+import org.springframework.social.showcase.repository.UserRepository;
+import org.springframework.social.showcase.service.JwtTokenService;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 

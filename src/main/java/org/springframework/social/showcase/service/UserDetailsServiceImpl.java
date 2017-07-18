@@ -1,4 +1,4 @@
-package org.springframework.social.showcase.account;
+package org.springframework.social.showcase.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +9,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.social.showcase.model.User;
+import org.springframework.social.showcase.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 @Service

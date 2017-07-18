@@ -20,8 +20,8 @@ import java.util.Optional;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
-import org.springframework.social.showcase.account.User;
-import org.springframework.social.showcase.account.UserRepository;
+import org.springframework.social.showcase.model.User;
+import org.springframework.social.showcase.repository.UserRepository;
 
 /**
  * Implementation of UserIdSource that returns the Spring Security {@link Authentication}'s name as the user ID.

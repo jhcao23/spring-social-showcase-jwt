@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.social.showcase.account.User;
-import org.springframework.social.showcase.account.UserRepository;
-import org.springframework.social.showcase.config.JwtTokenService;
+import org.springframework.social.showcase.model.User;
+import org.springframework.social.showcase.repository.UserRepository;
+import org.springframework.social.showcase.service.JwtTokenService;
 import org.springframework.util.StringUtils;
 
 /**

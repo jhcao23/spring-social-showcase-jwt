@@ -1,7 +1,7 @@
 package org.springframework.security.web.authentication;
 
-import static org.springframework.social.showcase.config.JwtTokenService.AUTH_HEADER_NAME;
-import static org.springframework.social.showcase.config.JwtTokenService.getToken4User;
+import static org.springframework.social.showcase.service.JwtTokenService.AUTH_HEADER_NAME;
+import static org.springframework.social.showcase.service.JwtTokenService.getToken4User;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -14,8 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.JwtRedirectStrategy;
-import org.springframework.social.showcase.account.User;
-import org.springframework.social.showcase.account.UserRepository;
+import org.springframework.social.showcase.model.User;
+import org.springframework.social.showcase.repository.UserRepository;
 import org.springframework.util.StringUtils;
 
 /**

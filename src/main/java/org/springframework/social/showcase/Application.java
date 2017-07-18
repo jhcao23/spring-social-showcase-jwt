@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
-@EntityScan(basePackages = "org.springframework.social.showcase.account")
-@EnableJpaRepositories(basePackages = "org.springframework.social.showcase.account")
+@EntityScan(basePackages = "org.springframework.social.showcase.model")
+@EnableJpaRepositories(basePackages = "org.springframework.social.showcase.repository")
 @EnableTransactionManagement
 public class Application {
 	public static void main(String[] args) {

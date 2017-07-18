@@ -1,4 +1,4 @@
-package org.springframework.social.showcase.config;
+package org.springframework.social.showcase.repository;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -13,10 +13,8 @@ import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.UsersConnectionRepository;
-import org.springframework.social.showcase.account.AdvancedUserConnectionRepository;
-import org.springframework.social.showcase.account.User;
-import org.springframework.social.showcase.account.UserConnectionRepository;
-import org.springframework.social.showcase.account.UserRepository;
+import org.springframework.social.showcase.model.User;
+import org.springframework.stereotype.Repository;
 
 public class JpaUsersConnectionRepository implements UsersConnectionRepository {
 

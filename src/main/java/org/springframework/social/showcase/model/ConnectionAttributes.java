@@ -1,4 +1,4 @@
-package org.springframework.social.showcase.account;
+package org.springframework.social.showcase.model;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;

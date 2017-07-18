@@ -1,4 +1,4 @@
-package org.springframework.social.showcase.config;
+package org.springframework.social.showcase.repository;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,12 +18,10 @@ import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.DuplicateConnectionException;
 import org.springframework.social.connect.NotConnectedException;
-import org.springframework.social.showcase.account.AdvancedUserConnectionRepository;
-import org.springframework.social.showcase.account.ConnectionProperty;
-import org.springframework.social.showcase.account.User;
-import org.springframework.social.showcase.account.UserConnection;
-import org.springframework.social.showcase.account.UserConnectionRepository;
-import org.springframework.social.showcase.account.UserRepository;
+import org.springframework.social.showcase.model.ConnectionProperty;
+import org.springframework.social.showcase.model.User;
+import org.springframework.social.showcase.model.UserConnection;
+import org.springframework.stereotype.Repository;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 

@@ -15,8 +15,8 @@
  */
 package org.springframework.social.showcase.signup;
 
-import static org.springframework.social.showcase.config.JwtTokenService.AUTH_HEADER_NAME;
-import static org.springframework.social.showcase.config.JwtTokenService.getToken4User;
+import static org.springframework.social.showcase.service.JwtTokenService.AUTH_HEADER_NAME;
+import static org.springframework.social.showcase.service.JwtTokenService.getToken4User;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
@@ -29,10 +29,10 @@ import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.web.ProviderSignInUtils;
-import org.springframework.social.showcase.account.User;
-import org.springframework.social.showcase.account.UserRepository;
 import org.springframework.social.showcase.message.Message;
 import org.springframework.social.showcase.message.MessageType;
+import org.springframework.social.showcase.model.User;
+import org.springframework.social.showcase.repository.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;

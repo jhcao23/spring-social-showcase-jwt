@@ -3,12 +3,13 @@ package org.springframework.social.showcase;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.social.showcase.account.User;
-import org.springframework.social.showcase.account.UserRepository;
+import org.springframework.social.showcase.model.User;
+import org.springframework.social.showcase.repository.UserRepository;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@org.springframework.web.bind.annotation.RestController
-public class RestController {
+@RestController
+public class DemoRestController {
 
 	@Autowired
 	private UserRepository userRepository;

@@ -38,7 +38,7 @@ import org.springframework.security.web.authentication.preauth.AbstractPreAuthen
 import org.springframework.social.UserIdSource;
 import org.springframework.social.security.SocialAuthenticationFilter;
 import org.springframework.social.security.SpringSocialConfigurer;
-import org.springframework.social.showcase.account.UserRepository;
+import org.springframework.social.showcase.repository.UserRepository;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 
 /**
@@ -61,7 +61,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/**/*.css", "/**/*.png", "/**/*.gif", "/**/*.jpg");
+		web
+			.ignoring().antMatchers("/**/*.css", "/**/*.png", "/**/*.gif", "/**/*.jpg")
+		;
 	}
 	
 	@Override
@@ -120,22 +122,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	 //JWT Stateless
 
     public JwtUsernamePasswordAuthenticationFilter getJwtUsernamePasswordAuthenticationFilter() throws Exception{
-    	JwtUsernamePasswordAuthenticationFilter filter = new JwtUsernamePasswordAuthenticationFilter(userRepository);
-    	filter.setAuthenticationManager(this.authenticationManager());
-    	return filter;
+	    	JwtUsernamePasswordAuthenticationFilter filter = new JwtUsernamePasswordAuthenticationFilter(userRepository);
+	    	filter.setAuthenticationManager(this.authenticationManager());
+	    	return filter;
     }
     
     public SpringSocialConfigurer getSpringSocialConfigurer(){
-    	SpringSocialConfigurer ssc = new SpringSocialConfigurer();
-    	ssc.userIdSource(userIdSource);
-    	ssc.addObjectPostProcessor(new ObjectPostProcessor<SocialAuthenticationFilter>(){
-    		@Override
-			public <O extends SocialAuthenticationFilter> O postProcess(O filter){
-				filter.setAuthenticationSuccessHandler(jwtSocialAuthenticationSuccessHandler);
-				return filter;
-			}
-		 });
-    	return ssc;
+	    	SpringSocialConfigurer ssc = new SpringSocialConfigurer();
+	    	ssc.userIdSource(userIdSource);
+	    	ssc.addObjectPostProcessor(new ObjectPostProcessor<SocialAuthenticationFilter>(){
+	    		@Override
+				public <O extends SocialAuthenticationFilter> O postProcess(O filter){
+					filter.setAuthenticationSuccessHandler(jwtSocialAuthenticationSuccessHandler);
+					return filter;
+				}
+			 });
+	    	return ssc;
     }
 
 }

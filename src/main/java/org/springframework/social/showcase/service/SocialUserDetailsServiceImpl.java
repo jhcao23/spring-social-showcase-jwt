@@ -1,4 +1,4 @@
-package org.springframework.social.showcase.account;
+package org.springframework.social.showcase.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.social.security.SocialUser;
 import org.springframework.social.security.SocialUserDetails;
 import org.springframework.social.security.SocialUserDetailsService;
+import org.springframework.social.showcase.model.User;
+import org.springframework.social.showcase.repository.UserRepository;
 
 public class SocialUserDetailsServiceImpl implements SocialUserDetailsService {
 

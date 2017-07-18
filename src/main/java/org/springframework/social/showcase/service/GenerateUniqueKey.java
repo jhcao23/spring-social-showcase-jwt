@@ -1,4 +1,4 @@
-package org.springframework.social.showcase.account;
+package org.springframework.social.showcase.service;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
  

@@ -1,4 +1,4 @@
-package org.springframework.social.showcase.account;
+package org.springframework.social.showcase.repository;
 
 import java.util.Iterator;
 import java.util.List;
@@ -9,8 +9,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
+import org.springframework.social.showcase.model.UserConnection;
+import org.springframework.stereotype.Repository;
 import org.springframework.util.MultiValueMap;
 
+@Repository
 public class AdvancedUserConnectionRepositoryImpl 
 	extends SimpleJpaRepository<UserConnection, Long>
 	implements AdvancedUserConnectionRepository {

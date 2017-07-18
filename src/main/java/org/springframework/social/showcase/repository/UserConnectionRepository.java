@@ -1,4 +1,4 @@
-package org.springframework.social.showcase.account;
+package org.springframework.social.showcase.repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +8,9 @@ import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.social.showcase.model.ConnectionProperty;
+import org.springframework.social.showcase.model.UserConnection;
+import org.springframework.stereotype.Repository;
 
 public interface UserConnectionRepository extends JpaRepository<UserConnection, Long> {
 

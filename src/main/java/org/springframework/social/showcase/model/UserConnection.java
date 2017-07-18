@@ -1,4 +1,4 @@
-package org.springframework.social.showcase.account;
+package org.springframework.social.showcase.model;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

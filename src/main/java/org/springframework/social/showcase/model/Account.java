@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.social.showcase.account;
+package org.springframework.social.showcase.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -1,7 +1,8 @@
-package org.springframework.social.showcase.account;
+package org.springframework.social.showcase.repository;
 
 import java.util.List;
 
+import org.springframework.social.showcase.model.UserConnection;
 import org.springframework.util.MultiValueMap;
 
 public interface AdvancedUserConnectionRepository {

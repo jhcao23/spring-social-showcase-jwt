@@ -13,11 +13,13 @@ import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.security.SocialUserDetailsService;
-import org.springframework.social.showcase.account.AdvancedUserConnectionRepository;
-import org.springframework.social.showcase.account.AdvancedUserConnectionRepositoryImpl;
-import org.springframework.social.showcase.account.SocialUserDetailsServiceImpl;
-import org.springframework.social.showcase.account.UserConnectionRepository;
-import org.springframework.social.showcase.account.UserRepository;
+import org.springframework.social.showcase.repository.AdvancedUserConnectionRepository;
+import org.springframework.social.showcase.repository.AdvancedUserConnectionRepositoryImpl;
+import org.springframework.social.showcase.repository.JpaUsersConnectionRepository;
+import org.springframework.social.showcase.repository.UserConnectionRepository;
+import org.springframework.social.showcase.repository.UserRepository;
+import org.springframework.social.showcase.service.JpaConnectionSignUp;
+import org.springframework.social.showcase.service.SocialUserDetailsServiceImpl;
 
 @Configuration
 public class SocialConfig extends SocialConfigurerAdapter{
@@ -44,6 +46,11 @@ public class SocialConfig extends SocialConfigurerAdapter{
 		usersConnectionRepository.setConnectionSignUp(getConnectionSignUp());
 		return usersConnectionRepository;
 	}	
+	@Override
+	public UserIdSource getUserIdSource() {
+		return new AuthenticationNameUserHashIdSource(userRepository);
+	}
+    
 	@Bean
 	public AdvancedUserConnectionRepository getAdvancedUserConnectionRepository(){
 		return new AdvancedUserConnectionRepositoryImpl(entityManager);
@@ -56,12 +63,7 @@ public class SocialConfig extends SocialConfigurerAdapter{
 	public ConnectionSignUp getConnectionSignUp(){
 		return new JpaConnectionSignUp(userRepository);
 	}
-	
-    @Override
-	public UserIdSource getUserIdSource() {
-		return new AuthenticationNameUserHashIdSource(userRepository);
-	}
-    
+	    
     //TODO: removed ProviderSignInUtils & ConnectController beans so that fresh social login 
     //		won't trigger UserDetailsService.loadUserByUsername, why?
     

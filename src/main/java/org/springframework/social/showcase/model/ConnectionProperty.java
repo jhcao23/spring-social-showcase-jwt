@@ -1,4 +1,4 @@
-package org.springframework.social.showcase.account;
+package org.springframework.social.showcase.model;
 
 import org.springframework.beans.factory.annotation.Value;
 

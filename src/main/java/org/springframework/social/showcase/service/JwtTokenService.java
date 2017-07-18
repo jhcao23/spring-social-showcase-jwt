@@ -1,11 +1,11 @@
-package org.springframework.social.showcase.config;
+package org.springframework.social.showcase.service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.springframework.social.showcase.account.User;
+import org.springframework.social.showcase.model.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
