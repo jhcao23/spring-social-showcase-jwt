@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.social.security.SocialUser;
 import org.springframework.social.security.SocialUserDetails;
 import org.springframework.social.security.SocialUserDetailsService;
+import org.springframework.social.showcase.model.Authority;
 import org.springframework.social.showcase.model.User;
 import org.springframework.social.showcase.repository.UserRepository;
 
@@ -25,9 +26,11 @@ public class SocialUserDetailsServiceImpl implements SocialUserDetailsService {
 	public SocialUserDetails loadUserByUserId(String userHashId) throws UsernameNotFoundException {
 		Optional<User> user = userRepository.findByHashId(userHashId);
 		if(user.isPresent()==false)
-	    	throw new UsernameNotFoundException("username::"+userHashId+" not found");
+	    		throw new UsernameNotFoundException("username::"+userHashId+" not found");
 		List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
-	    grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));	    
+		for(Authority a: user.get().getAuthorityList()) {
+	    		grantedAuthorities.add(new SimpleGrantedAuthority(a.getAuthorityName()));
+	    }	    
 		return new SocialUser(
 			userHashId, 
 			user.get().getAccount()==null?"":user.get().getAccount().getPassword(), //TODO: empty password MIGHT be an issue

@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.social.showcase.model.User; 
 
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
 	public Optional<User> findByAccountUsername(String username);
 	public Optional<User> findByHashId(String hashId);

@@ -7,6 +7,6 @@ import org.springframework.util.MultiValueMap;
 
 public interface AdvancedUserConnectionRepository {
 
-	public List<UserConnection> findByUserIdAndMap(Integer userId, MultiValueMap<String, String> providerUsers);
+	public List<UserConnection> findByUserIdAndMap(Long userId, MultiValueMap<String, String> providerUsers);
 	
 }

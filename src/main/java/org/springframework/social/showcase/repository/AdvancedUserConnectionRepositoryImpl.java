@@ -26,7 +26,7 @@ public class AdvancedUserConnectionRepositoryImpl
 		this.entityManager = em;
 	}
 
-	public List<UserConnection> findByUserIdAndMap(Integer userId, MultiValueMap<String, String> providerUsers){
+	public List<UserConnection> findByUserIdAndMap(Long userId, MultiValueMap<String, String> providerUsers){
 		
 		String query = 
 			"SELECT uc "

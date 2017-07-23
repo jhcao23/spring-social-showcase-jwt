@@ -21,13 +21,12 @@ import org.springframework.social.connect.NotConnectedException;
 import org.springframework.social.showcase.model.ConnectionProperty;
 import org.springframework.social.showcase.model.User;
 import org.springframework.social.showcase.model.UserConnection;
-import org.springframework.stereotype.Repository;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 public class JpaConnectionRepository implements ConnectionRepository {
 
-	private final Integer userId;
+	private final Long userId;
 	
 	private AdvancedUserConnectionRepository advancedUserConnectionRepository;
 	
@@ -40,7 +39,7 @@ public class JpaConnectionRepository implements ConnectionRepository {
 	private final TextEncryptor textEncryptor;
 
 	public JpaConnectionRepository(
-		Integer userId, 
+		Long userId, 
 		UserRepository userRepository,
 		UserConnectionRepository userConnectionRepository,
 		AdvancedUserConnectionRepository advancedUserConnectionRepository,

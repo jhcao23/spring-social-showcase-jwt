@@ -31,7 +31,9 @@ import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.showcase.message.Message;
 import org.springframework.social.showcase.message.MessageType;
+import org.springframework.social.showcase.model.Authority;
 import org.springframework.social.showcase.model.User;
+import org.springframework.social.showcase.repository.AuthorityRepository;
 import org.springframework.social.showcase.repository.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -45,6 +47,9 @@ public class SignupController {
 
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private AuthorityRepository authorityRepository;
+	
 	private ProviderSignInUtils providerSignInUtils;
 
 	@Inject
@@ -70,7 +75,8 @@ public class SignupController {
 		if (formBinding.hasErrors()) {
 			return null;
 		}
-		User user = createUser(form, formBinding);
+		Authority authority = authorityRepository.findOne(Authority.ID_ROLE_USER);
+		User user = createUser(form, formBinding, authority);
 		if (user != null) {
 			SecurityContextHolder.getContext().setAuthentication(
 				new UsernamePasswordAuthenticationToken(user.getHashId(), null, null)
@@ -85,10 +91,11 @@ public class SignupController {
 
 	// internal helpers
 	
-	private User createUser(SignupForm form, BindingResult formBinding) {
+	private User createUser(SignupForm form, BindingResult formBinding, Authority authority) {
 		try {
 			User user = new User();
-			user.assembleUser(form.getUsername(), form.getPassword(), form.getFirstName(), form.getLastName());			
+			user.assembleUser(form.getUsername(), form.getPassword(), form.getFirstName(), form.getLastName());
+			user.addAuthority(authority);
 			return userRepository.save(user);			
 		} catch (Exception e) {
 			e.printStackTrace();

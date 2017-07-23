@@ -1,5 +1,23 @@
 Spring Social Showcase (Spring Boot)
+
+### Note for Facebook: 
+
+1. facebook access_token is [portable](https://developers.facebook.com/docs/facebook-login/access-tokens#portabletokens).
+2. Web Login [authResponse](https://developers.facebook.com/docs/facebook-login/web#checklogin) is detailed.
+3. Web Login [authResponse.signedRequest](https://developers.facebook.com/docs/reference/login/signed-request/) is detailed.
+4. facebook has 2 types of access_token expiry:
+check the docs about how to [convert short-lived token to long-lived token](https://developers.facebook.com/docs/facebook-login/access-tokens/expiration-and-extension);
+so the format to exchange to long-lived token is GET 
+	`/oauth/access_token? 
+	grant_type=fb_exchange_token&amp;           
+    client_id={app-id}&amp;
+    client_secret={app-secret}&amp;
+    fb_exchange_token={short-lived-token}`
+
+
+
 ====================================
+
 This sample app demonstrates many of the capabilities of the Spring Social project, including:
 * Connect to Facebook, Twitter, and LinkedIn
 * Sign in using Facebook, Twitter, and Linked in using ProviderSignInController for provider-signin

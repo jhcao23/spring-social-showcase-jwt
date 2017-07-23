@@ -14,7 +14,6 @@ import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.showcase.model.User;
-import org.springframework.stereotype.Repository;
 
 public class JpaUsersConnectionRepository implements UsersConnectionRepository {
 

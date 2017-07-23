@@ -29,6 +29,7 @@ repositories {
   maven { url "http://repo.spring.io/milestone" }
   mavenCentral()
   maven { url "http://repo.spring.io/libs-milestone" }
+  maven { url "https://raw.githubusercontent.com/jhcao23/archetype/master" }
 }
 
 dependencies {
@@ -52,6 +53,9 @@ dependencies {
 
   compile("org.springframework.boot:spring-boot-starter-actuator")
   compile("org.springframework.boot:spring-boot-devtools")
+  
+  compile("org.projectlombok:lombok")
+  compile("org.springframework.social:spring-social-facebook-extension-mobile:0.0.1.RELEASE")
   
   testCompile("org.springframework.boot:spring-boot-starter-test")
   

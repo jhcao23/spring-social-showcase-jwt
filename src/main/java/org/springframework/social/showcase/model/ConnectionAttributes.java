@@ -8,7 +8,8 @@ public class ConnectionAttributes implements ConnectionProperty {
 
 	private String providerId;
 	private String providerUserId;
-	private Integer rank = 0;
+	private Integer rank = 0;		
+	//TODO: + appName
 	
 	private String displayName;	
 	private String profileUrl ;

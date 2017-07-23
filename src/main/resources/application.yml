@@ -14,14 +14,15 @@ spring:
       password: spring
       driver-class-name: com.mysql.jdbc.Driver
   data:
-    jpa:
+    jpa:      
       repositories:
-        enabled: true
+        enabled: true        
   jpa:
     show-sql: true
     hibernate:
       naming:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+      ddl-auto: none            
 logging:
   level:
     org.springframework.social: TRACE
