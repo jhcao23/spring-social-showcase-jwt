@@ -5,6 +5,7 @@ import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.security.web.authentication.JwtSocialAuthenticationSuccessHandler;
 import org.springframework.social.UserIdSource;
@@ -52,6 +53,8 @@ public class SocialConfig extends SocialConfigurerAdapter{
 //	}
 	
 	@Override
+	@Bean
+	@Primary
     public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
 		JpaUsersConnectionRepository usersConnectionRepository = new 
 			JpaUsersConnectionRepository(
@@ -65,6 +68,8 @@ public class SocialConfig extends SocialConfigurerAdapter{
 		return usersConnectionRepository;
 	}	
 	@Override
+	@Bean
+	@Primary
 	public UserIdSource getUserIdSource() {
 		return new AuthenticationNameUserHashIdSource(userRepository);
 	}
