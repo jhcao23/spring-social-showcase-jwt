@@ -82,4 +82,6 @@ If you run into any problems or have a suggested new feature, let us know at htt
 
 `GRANT ALL ON spring_social_test.* TO 'spring'@'%';`
 
+`FLUSH PRIVILEGES;`
+
 `commit;`

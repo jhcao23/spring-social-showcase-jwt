@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS `User`;
 CREATE TABLE `User`
 (
    id       BIGINT         NOT NULL AUTO_INCREMENT,
-   hash_id  VARCHAR(512)   NOT NULL,
+   hash_id  VARCHAR(255)   NOT NULL,
    PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX uc_User_hash  ON `User` (hash_id ASC);
@@ -34,14 +34,14 @@ CREATE TABLE User_Connection
    id                BIGINT         NOT NULL AUTO_INCREMENT,
    user_id           BIGINT         NOT NULL,
    provider_id       VARCHAR(255)   NOT NULL,
-   provider_user_id  VARCHAR(512)   NOT NULL,
+   provider_user_id  VARCHAR(255)   NOT NULL,
    rank              INT            DEFAULT 0 NOT NULL,
-   display_name      VARCHAR(512),
-   profile_url       VARCHAR(512),
-   image_url         VARCHAR(512),
-   access_token      VARCHAR(512),
-   secret            VARCHAR(512),
-   refresh_token     VARCHAR(512),
+   display_name      VARCHAR(255),
+   profile_url       VARCHAR(255),
+   image_url         VARCHAR(255),
+   access_token      VARCHAR(255),
+   secret            VARCHAR(255),
+   refresh_token     VARCHAR(255),
    expire_time       BIGINT,
    PRIMARY KEY (id)
 );
@@ -82,3 +82,4 @@ ALTER TABLE User_Authority
     ADD CONSTRAINT fk_User_Authority_Authority
     FOREIGN KEY (authority_id) REFERENCES Authority (id);
 
+COMMIT;
