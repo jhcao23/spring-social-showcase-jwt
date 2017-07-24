@@ -37,21 +37,6 @@ public class SocialConfig extends SocialConfigurerAdapter{
 	@Autowired
 	private TextEncryptor textEncryptor;
 	
-//	@Autowired
-//	private Environment environment;
-//	@Autowired
-//	private List<SocialConfigurer> socialConfigurers;
-//
-//	@Bean	
-//	@Primary
-//	public ConnectionFactoryLocator getConnectionFactoryLocator() {
-//		MobileSecurityEnabledConnectionFactoryConfigurer cfConfig = new MobileSecurityEnabledConnectionFactoryConfigurer();
-//		for (SocialConfigurer socialConfigurer : socialConfigurers) {
-//			socialConfigurer.addConnectionFactories(cfConfig, environment);
-//		}
-//		return cfConfig.getConnectionFactoryLocator();		
-//	}
-	
 	@Override
 	@Bean
 	@Primary

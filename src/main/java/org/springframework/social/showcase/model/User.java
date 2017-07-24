@@ -1,5 +1,6 @@
 package org.springframework.social.showcase.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -40,7 +41,7 @@ public class User {
 		joinColumns=@JoinColumn(name="user_id", referencedColumnName="id"),
 		inverseJoinColumns=@JoinColumn(name="authority_id", referencedColumnName="id")
 	)
-	private Set<Authority> authorityList;
+	private Set<Authority> authorityList = new HashSet<Authority>();
 
 	@Transient
 	public void assembleUser(String username, String password, String firstName, String lastName){

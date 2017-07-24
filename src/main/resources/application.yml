@@ -24,6 +24,7 @@ spring:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
       ddl-auto: none            
 logging:
+  file: showcase.log
   level:
     org.springframework.social: TRACE
     org.springframework.social.showcase: TRACE    
