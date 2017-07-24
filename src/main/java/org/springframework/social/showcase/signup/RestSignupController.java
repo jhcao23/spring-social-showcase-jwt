@@ -43,7 +43,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
-@RestController("/rest")
+@RestController
 public class RestSignupController {
 	
 	private final Logger logger = LoggerFactory.getLogger(RestSignupController.class);
@@ -57,12 +57,12 @@ public class RestSignupController {
 
 	@Inject
 	public RestSignupController(
-			ConnectionFactoryLocator connectionFactoryLocator,
-			UsersConnectionRepository connectionRepository) {
+		ConnectionFactoryLocator connectionFactoryLocator,
+		UsersConnectionRepository connectionRepository) {
 		this.providerSignInUtils = new ProviderSignInUtils(connectionFactoryLocator, connectionRepository);
 	}
 
-	@RequestMapping(value="/signup", method=RequestMethod.POST)
+	@RequestMapping(value="/rest/signup", method=RequestMethod.POST)
 	public ResponseEntity<String> signup(@Valid SignupForm form, BindingResult formBinding, WebRequest request, HttpServletResponse response) {
 		if (formBinding.hasErrors() || form==null) {
 			return ResponseEntity.badRequest().body("invalid signup form " + formBinding.toString());

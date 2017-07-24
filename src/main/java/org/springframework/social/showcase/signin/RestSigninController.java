@@ -18,10 +18,10 @@ package org.springframework.social.showcase.signin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/rest")
+@RestController
 public class RestSigninController {
 
-	@PostMapping(value="/login")
+	@PostMapping(value="/rest/login")
 	public void signin() {
 	}
 
