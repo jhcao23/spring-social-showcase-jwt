@@ -22,28 +22,31 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.web.ProviderSignInUtils;
-import org.springframework.social.showcase.message.Message;
-import org.springframework.social.showcase.message.MessageType;
 import org.springframework.social.showcase.model.Authority;
 import org.springframework.social.showcase.model.User;
 import org.springframework.social.showcase.repository.AuthorityRepository;
 import org.springframework.social.showcase.repository.UserRepository;
-import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
-@Controller
-public class SignupController {
+@RestController("/rest")
+public class RestSignupController {
+	
+	private final Logger logger = LoggerFactory.getLogger(RestSignupController.class);
 
 	@Autowired
 	private UserRepository userRepository;
@@ -53,40 +56,40 @@ public class SignupController {
 	private ProviderSignInUtils providerSignInUtils;
 
 	@Inject
-	public SignupController(
-		                    ConnectionFactoryLocator connectionFactoryLocator,
-		                    UsersConnectionRepository connectionRepository) {
+	public RestSignupController(
+			ConnectionFactoryLocator connectionFactoryLocator,
+			UsersConnectionRepository connectionRepository) {
 		this.providerSignInUtils = new ProviderSignInUtils(connectionFactoryLocator, connectionRepository);
 	}
 
-	@RequestMapping(value="/signup", method=RequestMethod.GET)
-	public SignupForm signupForm(WebRequest request) {
-		Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
-		if (connection != null) {
-			request.setAttribute("message", new Message(MessageType.INFO, "Your " + StringUtils.capitalize(connection.getKey().getProviderId()) + " account is not associated with a Spring Social Showcase account. If you're new, please sign up."), WebRequest.SCOPE_REQUEST);
-			return SignupForm.fromProviderUser(connection.fetchUserProfile());
-		} else {
-			return new SignupForm();
-		}
-	}
-
 	@RequestMapping(value="/signup", method=RequestMethod.POST)
-	public String signup(@Valid SignupForm form, BindingResult formBinding, WebRequest request, HttpServletResponse response) {
+	public ResponseEntity<String> signup(@Valid SignupForm form, BindingResult formBinding, WebRequest request, HttpServletResponse response) {
 		if (formBinding.hasErrors() || form==null) {
-			return null;
+			return ResponseEntity.badRequest().body("invalid signup form " + formBinding.toString());
 		}
 		Authority authority = authorityRepository.findOne(Authority.ID_ROLE_USER);
-		User user = createUser(form, formBinding, authority);
-		if (user != null) {
-			SecurityContextHolder.getContext().setAuthentication(
-				new UsernamePasswordAuthenticationToken(user.getHashId(), null, null)
-			);
-			providerSignInUtils.doPostSignUp(user.getHashId(), request);
-			String token = getToken4User(user);
-			response.addHeader(AUTH_HEADER_NAME, token);
-			return null;
+		try {
+			String username = form.getUsername();
+			if(userRepository.findByAccountUsername(username).isPresent()) {
+				return ResponseEntity.status(HttpStatus.IM_USED).body("username is already used!");//226
+			}
+			User user = createUser(form, formBinding, authority);
+			//successfully created a User
+			if (user != null) {
+				SecurityContextHolder.getContext().setAuthentication(
+					new UsernamePasswordAuthenticationToken(user.getHashId(), null, null)
+				);
+				providerSignInUtils.doPostSignUp(user.getHashId(), request);
+				String token = getToken4User(user);
+				response.addHeader(AUTH_HEADER_NAME, token);
+				return ResponseEntity.ok().build();//200
+			}
+		}catch(DataAccessException e) {
+			logger.debug("DataAccessException: {}", e.getMessage());
+		}catch(Exception e) {
+			logger.error("Error: {}", e.getMessage());
 		}
-		return null;
+		return ResponseEntity.badRequest().body("internal error");//400
 	}
 
 	// internal helpers

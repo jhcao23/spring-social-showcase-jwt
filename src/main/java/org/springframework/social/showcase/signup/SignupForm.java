@@ -25,7 +25,7 @@ public class SignupForm {
 	@NotEmpty
 	private String username;
 
-	@Size(min = 6, message = "must be at least 6 characters")
+	@Size(min = 6, max = 100, message = "must be at least 6 characters and at most 100")
 	private String password;
 
 	@NotEmpty

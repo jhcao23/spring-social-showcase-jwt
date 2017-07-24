@@ -1,19 +1,13 @@
 package org.springframework.social.showcase.config;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.security.web.authentication.JwtSocialAuthenticationSuccessHandler;
 import org.springframework.social.UserIdSource;
-import org.springframework.social.config.annotation.MobileSecurityEnabledConnectionFactoryConfigurer;
-import org.springframework.social.config.annotation.SocialConfigurer;
 import org.springframework.social.config.annotation.SocialConfigurerAdapter;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionSignUp;
@@ -42,20 +36,20 @@ public class SocialConfig extends SocialConfigurerAdapter{
 	@Autowired
 	private TextEncryptor textEncryptor;
 	
-	@Autowired
-	private Environment environment;
-	@Autowired
-	private List<SocialConfigurer> socialConfigurers;
-
-	@Bean	
-	@Primary
-	public ConnectionFactoryLocator getConnectionFactoryLocator() {
-		MobileSecurityEnabledConnectionFactoryConfigurer cfConfig = new MobileSecurityEnabledConnectionFactoryConfigurer();
-		for (SocialConfigurer socialConfigurer : socialConfigurers) {
-			socialConfigurer.addConnectionFactories(cfConfig, environment);
-		}
-		return cfConfig.getConnectionFactoryLocator();		
-	}
+//	@Autowired
+//	private Environment environment;
+//	@Autowired
+//	private List<SocialConfigurer> socialConfigurers;
+//
+//	@Bean	
+//	@Primary
+//	public ConnectionFactoryLocator getConnectionFactoryLocator() {
+//		MobileSecurityEnabledConnectionFactoryConfigurer cfConfig = new MobileSecurityEnabledConnectionFactoryConfigurer();
+//		for (SocialConfigurer socialConfigurer : socialConfigurers) {
+//			socialConfigurer.addConnectionFactories(cfConfig, environment);
+//		}
+//		return cfConfig.getConnectionFactoryLocator();		
+//	}
 	
 	@Override
     public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
