@@ -5,9 +5,12 @@ build
 bin
 dist
 target
+.vscode
+.idea
 .gradle
 .git
 .settings
 .classpath
 .project
 .DS_Store
+*.log
