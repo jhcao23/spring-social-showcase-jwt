@@ -17,7 +17,7 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
             		registry.addMapping("/**")
             		.allowedMethods("*")
-            		.allowedMethods(GET.name(), PUT.name(), POST.name(), OPTIONS.name(), PATCH.name())
+            		.allowedMethods(GET.name(), PUT.name(), POST.name(), OPTIONS.name())	//TODO: PATCH solved the 'invalid cors request' issue, why?
             		.allowCredentials(true)
             		.allowedHeaders("*")
             		.allowedOrigins("*")
