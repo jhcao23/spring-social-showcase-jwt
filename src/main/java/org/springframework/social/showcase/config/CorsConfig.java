@@ -3,6 +3,7 @@ package org.springframework.social.showcase.config;
 import static org.springframework.http.HttpMethod.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.social.showcase.service.JwtTokenService;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -16,11 +17,15 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
             		registry.addMapping("/**")
+<<<<<<< HEAD
             		.allowedMethods("*")
+=======
+>>>>>>> 4847428c49dcaef3740fe91c83b149104a700518
             		.allowedMethods(GET.name(), PUT.name(), POST.name(), OPTIONS.name())	//TODO: PATCH solved the 'invalid cors request' issue, why?
             		.allowCredentials(true)
             		.allowedHeaders("*")
             		.allowedOrigins("*")
+            		.exposedHeaders(JwtTokenService.AUTH_HEADER_NAME)
             	;
             	
             }
