@@ -26,7 +26,7 @@
 	        <h1>Sign In</h1>
 
 			<form id="signin" th:action="@{/signin/authenticate}" method="post">
-				<input type="hidden" name="_csrf" th:value="${_csrf.token}"></input>
+<!-- 				<input type="hidden" name="_csrf" th:value="${_csrf.token}"></input> -->
 				<div class="formInfo">
 			  		<div class="error" th:if="${param.error eq 'bad_credentials'}">
 			  			Your sign in information was incorrect.

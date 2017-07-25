@@ -72,6 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
+				.csrf().disable()
 				.formLogin()
 				.loginPage("/login")			//"signin" will cause a crazy error
 				.usernameParameter("username")
