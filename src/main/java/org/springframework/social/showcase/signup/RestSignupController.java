@@ -39,8 +39,10 @@ import org.springframework.social.showcase.repository.AuthorityRepository;
 import org.springframework.social.showcase.repository.UserRepository;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
+import org.thymeleaf.util.MapUtils;
 
 @RestController
 public class RestSignupController {
@@ -62,8 +64,8 @@ public class RestSignupController {
 	}
 
 	@PostMapping(value="/rest/signup")
-	public ResponseEntity<String> signup(@Valid SignupForm form, BindingResult formBinding, WebRequest request, HttpServletResponse response) {
-		if (formBinding.hasErrors() || form==null) {
+	public ResponseEntity<String> signup(@Valid @RequestBody SignupForm form, BindingResult formBinding, WebRequest request, HttpServletResponse response) {
+		if (formBinding.hasErrors() || form==null) {			
 			return ResponseEntity.badRequest().body("invalid signup form " + formBinding.toString());
 		}
 		Authority authority = authorityRepository.findOne(Authority.ID_ROLE_USER);
