@@ -1,10 +1,6 @@
 package org.springframework.social.showcase.config;
 
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.OPTIONS;
-import static org.springframework.http.HttpMethod.POST;
-import static org.springframework.http.HttpMethod.PUT;
-
+import static org.springframework.http.HttpMethod.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -21,10 +17,7 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
             		registry.addMapping("/**")
             		.allowedMethods("*")
-//            		.allowedMethods(GET.name())
-//            		.allowedMethods(PUT.name())
-//            		.allowedMethods(POST.name())
-//            		.allowedMethods(OPTIONS.name())
+            		.allowedMethods(GET.name(), PUT.name(), POST.name(), OPTIONS.name(), PATCH.name())
             		.allowCredentials(true)
             		.allowedHeaders("*")
             		.allowedOrigins("*")
