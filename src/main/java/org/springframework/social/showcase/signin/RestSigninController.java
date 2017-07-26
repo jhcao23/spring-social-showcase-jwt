@@ -15,14 +15,23 @@
  */
 package org.springframework.social.showcase.signin;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+
+import org.springframework.social.showcase.model.LoginAccount;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
 
 @RestController
 public class RestSigninController {
 
-	@PostMapping(value="/rest/login")
-	public void signin() {
+	@PostMapping(value="/rest/signin")
+	public void signin(@Valid @RequestBody LoginAccount loginAccount, BindingResult formBinding, WebRequest request, HttpServletResponse response) {
+		response.addHeader("Access-Control-Allow-Origin", "http://localhost:8100");
+		System.out.println("rest signin-ing!");
 	}
 
 }

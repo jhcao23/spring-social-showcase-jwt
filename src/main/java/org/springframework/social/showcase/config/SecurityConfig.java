@@ -16,8 +16,10 @@
 package org.springframework.social.showcase.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -40,6 +42,7 @@ import org.springframework.social.UserIdSource;
 import org.springframework.social.security.SocialAuthenticationFilter;
 import org.springframework.social.security.SpringSocialConfigurer;
 import org.springframework.social.showcase.repository.UserRepository;
+import org.springframework.web.filter.CorsFilter;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 
 /**
@@ -59,11 +62,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	private UserRepository userRepository;
 	@Autowired
 	private UserDetailsService userDetailsService;
+	
+	@Autowired
+	private CorsFilter corsFilter;
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web
-			.ignoring().antMatchers("/**/*.css", "/**/*.png", "/**/*.gif", "/**/*.jpg")
+			.ignoring()
+				.antMatchers("/**/*.css", "/**/*.png", "/**/*.gif", "/**/*.jpg")
+					
 		;
 	}
 	
@@ -88,15 +96,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 					.permitAll()
 			.and()
 				.authorizeRequests()
+					.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()		
 					.antMatchers("/rest/signup").permitAll()
+//					.antMatchers("/rest/signin").permitAll()
 					.antMatchers("/", "/webjars/**", "/admin/**", "/favicon.ico", "/resources/**", "/auth/**", "/signin/**", "/signup/**", "/disconnect/facebook").permitAll()
 					.antMatchers("/**").authenticated()
 			.and()
 				.rememberMe()
 			.and()
 				.addFilterBefore(new JwtAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class)
-            	.addFilterBefore(getJwtUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-				.apply(getSpringSocialConfigurer())
+				.addFilterBefore(corsFilter, JwtAuthenticationFilter.class)
+				.addFilterBefore(getJwtUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+			.apply(getSpringSocialConfigurer())
 			;
 	}
 	

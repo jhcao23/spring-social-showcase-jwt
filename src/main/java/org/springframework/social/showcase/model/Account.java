@@ -27,14 +27,10 @@ import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-public class Account {
+public class Account extends LoginAccount {
 
 	private int id; 
 	
-	private String username;
-
-	private String password;
-
 	private String firstName;
 
 	private String lastName;
@@ -44,9 +40,10 @@ public class Account {
 	public Account() {
 		super();
 	}
+
 	public Account(String username, String password, String firstName, String lastName) {
-		this.username = username;
-		this.password = password;
+		this.setUsername(username);
+		this.setPassword(password);
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
@@ -61,22 +58,6 @@ public class Account {
 		this.id = id;
 	}
 	
-	@Column(unique = true, nullable = false, name="username")
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}	
-	
-	@Column(nullable = false)
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	@Column(nullable = true, name="first_name")
 	public String getFirstName() {
 		return firstName;

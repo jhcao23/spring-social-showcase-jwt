@@ -16,7 +16,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.social.showcase.model.Account;
+import org.springframework.security.web.util.matcher.OrRequestMatcher;
+import org.springframework.social.showcase.model.LoginAccount;
 import org.springframework.social.showcase.model.User;
 import org.springframework.social.showcase.repository.UserRepository;
 import org.springframework.social.showcase.service.JwtTokenService;
@@ -37,11 +38,17 @@ public class JwtUsernamePasswordAuthenticationFilter extends AbstractAuthenticat
 	private String usernameParameter = SPRING_SECURITY_FORM_USERNAME_KEY;
 	private String passwordParameter = SPRING_SECURITY_FORM_PASSWORD_KEY;
 	
+	public static final String DEFAULT_REST_LOGIN_URL = "/rest/signin";
+	
 	private UserRepository userRepository;
-	private boolean postOnly = true;
+	private boolean postOnly = true;	
 	
 	public JwtUsernamePasswordAuthenticationFilter(UserRepository userRepository) {
-		super(new AntPathRequestMatcher("/signin/authenticate", "POST"));
+		super(
+			new OrRequestMatcher(
+				new AntPathRequestMatcher(DEFAULT_REST_LOGIN_URL, "POST")
+			)
+		);
 		this.userRepository = userRepository;
 	}
 
@@ -58,6 +65,7 @@ public class JwtUsernamePasswordAuthenticationFilter extends AbstractAuthenticat
 		if(optional.isPresent()){
 			User user = optional.get();
 			String token = JwtTokenService.getToken4User(user);
+			response.setContentType("application/json");
 			response.addHeader(JwtTokenService.AUTH_HEADER_NAME, token);
 		}		
 		//hello don't call super, we just want to set HEADER; otherwise super will redirect
@@ -71,25 +79,22 @@ public class JwtUsernamePasswordAuthenticationFilter extends AbstractAuthenticat
 			throw new AuthenticationServiceException(
 					"Authentication method not supported: " + request.getMethod());
 		}
-		String username, password;
-		String contentType = request.getContentType();
-		if(contentType.toLowerCase().contains("json")){
-			Account account = new ObjectMapper().readValue(request.getReader(), Account.class);		
-			username = account.getUsername();
-			password = account.getPassword();
-		}else{
-			username = request.getParameter(usernameParameter);
-			password = request.getParameter(passwordParameter);
+		String username = null, password = null;
+		if(request.getMethod().trim().equalsIgnoreCase("POST")) {
+			String contentType = request.getContentType();				
+			if(contentType.contains("json")) {
+				LoginAccount account = new ObjectMapper().readValue(request.getReader(), LoginAccount.class);				
+				username = account.getUsername();		
+				password = account.getPassword();
+			}			
+			if (username == null) {
+				username = "";
+			}
+			if (password == null) {
+				password = "";
+			}
+			username = username.trim();
 		}
-
-		if (username == null) {
-			username = "";
-		}
-		if (password == null) {
-			password = "";
-		}
-		username = username.trim();
-		
 		UsernamePasswordAuthenticationToken authRequest = 
 			new UsernamePasswordAuthenticationToken(username, password);
 		
