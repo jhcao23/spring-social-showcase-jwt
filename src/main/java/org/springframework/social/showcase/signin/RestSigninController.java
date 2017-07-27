@@ -15,11 +15,14 @@
  */
 package org.springframework.social.showcase.signin;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.social.showcase.model.LoginAccount;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,6 +35,12 @@ public class RestSigninController {
 	public void signin(@Valid @RequestBody LoginAccount loginAccount, BindingResult formBinding, WebRequest request, HttpServletResponse response) {
 		response.addHeader("Access-Control-Allow-Origin", "http://localhost:8100");
 		System.out.println("rest signin-ing!");
+	}
+	
+	@GetMapping(value="/rest/test")
+	public Object test(@AuthenticationPrincipal Object identity, HttpServletRequest request, HttpServletResponse response) {
+		response.addHeader("lalala", "lalalla");
+		return identity;
 	}
 
 }

@@ -26,35 +26,42 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 		Assert.isInstanceOf(HttpServletRequest.class, request, "request must be HttpServletRequest");
 		Assert.isInstanceOf(HttpServletResponse.class, response, "response must be HttpServletResponse");
 		
-		setAuthenticationFromHeader((HttpServletRequest) request, (HttpServletResponse)response);
-		chain.doFilter(request, response);
+		if( setAuthenticationFromHeader((HttpServletRequest) request, (HttpServletResponse)response) ) {			
+			chain.doFilter(request, response);
+		}else {
+			//JWT authentication failed then return! 
+		}
 
 	}
 
-	private void setAuthenticationFromHeader(HttpServletRequest request, HttpServletResponse response) {
+	private boolean setAuthenticationFromHeader(HttpServletRequest request, HttpServletResponse response) {
 		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if(authentication==null){
 	        final String authHeader = request.getHeader(JwtTokenService.AUTHORIZATION);
-	        final String token = getTokenFromHeader(authHeader);
-	        if(token!=null){
-	        	String hashId = JwtTokenService.getHashId(token);
-	        	if(hashId!=null){
-	        		SecurityContextHolder.getContext().setAuthentication(
-	        			new UsernamePasswordAuthenticationToken(hashId, null, null)
-	        		);
-	        	}else{
-	        		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-	        		response.addHeader(JwtTokenService.AUTHORIZATION, JwtTokenService.AUTH_HEADER_REFRESH);;
-	        	}
+	        if(authHeader!=null) {//from now on, confirm header has Authorization, then JWT authentication starts!
+		        final String token = getTokenFromHeader(authHeader);
+		        if(token!=null){
+			        	String hashId = JwtTokenService.getHashId(token);
+			        	if(hashId!=null){
+			        		SecurityContextHolder.getContext().setAuthentication(
+			        			new UsernamePasswordAuthenticationToken(hashId, null, null)
+			        		);
+			        	}else{
+			        		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			    			response.addHeader(JwtTokenService.AUTHORIZATION, JwtTokenService.AUTH_HEADER_REFRESH);
+			    			return false; //only fail when [Authorization: Bearer $JWT] has token and fails!
+			        	}
+		        }
 	        }
 		}
+		return true;
 		
 	}
 	
 	private String getTokenFromHeader(String authHeader){
 		if(authHeader!=null && authHeader.trim().startsWith(JwtTokenService.BEARER)){
-        	String token = StringUtils.trimLeadingWhitespace(authHeader.substring(JwtTokenService.BEARER.length()));
-        	return token;
+	        	String token = StringUtils.trimLeadingWhitespace(authHeader.substring(JwtTokenService.BEARER.length()));
+	        	return token;
 		}
 		return null;
 		

@@ -30,7 +30,7 @@ public class User {
 	@GenericGenerator(name = "native", strategy = "native")	
 	private Long id;
 	
-	@Column(name="hash_id", length=512)	
+	@Column(name="hash_id", length=255)	
 	private String hashId;
 	
 	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY, optional=true, mappedBy="user")		
