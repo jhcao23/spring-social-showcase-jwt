@@ -1,3 +1,4 @@
+- 156: update to Spring Boot 1.5.6; update SecurityConfig to remove @EnableWebSecurity to take advantage of boot feature. 
 - cors: solve CORS issues due to angular ClientHttp.post failed for un-exposed headers, now working perfectly and no CORS issue. Confidently there is no more CORS issue in short future.
 - stateless: add STATELESS policy to SecurityConfig
 - authority: add authority table
