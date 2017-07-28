@@ -77,7 +77,7 @@ public class SocialConfig extends SocialConfigurerAdapter{
     
     @Bean
     public JwtSocialAuthenticationSuccessHandler getJwtSocialAuthenticationSuccessHandler(){
-    	return new JwtSocialAuthenticationSuccessHandler(userRepository);
+    		return new JwtSocialAuthenticationSuccessHandler(userRepository);
     }
     
 }

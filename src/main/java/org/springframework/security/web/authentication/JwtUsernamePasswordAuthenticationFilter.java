@@ -39,6 +39,7 @@ public class JwtUsernamePasswordAuthenticationFilter extends AbstractAuthenticat
 	private String passwordParameter = SPRING_SECURITY_FORM_PASSWORD_KEY;
 	
 	public static final String DEFAULT_REST_LOGIN_URL = "/rest/signin";
+	public static final String DEFAULT_WEB_LOGIN_URL = "/signin/authenticate";
 	
 	private UserRepository userRepository;
 	private boolean postOnly = true;	
@@ -46,7 +47,8 @@ public class JwtUsernamePasswordAuthenticationFilter extends AbstractAuthenticat
 	public JwtUsernamePasswordAuthenticationFilter(UserRepository userRepository) {
 		super(
 			new OrRequestMatcher(
-				new AntPathRequestMatcher(DEFAULT_REST_LOGIN_URL, "POST")
+				new AntPathRequestMatcher(DEFAULT_REST_LOGIN_URL, "POST"),
+				new AntPathRequestMatcher(DEFAULT_WEB_LOGIN_URL, "POST")
 			)
 		);
 		this.userRepository = userRepository;
@@ -81,12 +83,16 @@ public class JwtUsernamePasswordAuthenticationFilter extends AbstractAuthenticat
 		}
 		String username = null, password = null;
 		if(request.getMethod().trim().equalsIgnoreCase("POST")) {
-			String contentType = request.getContentType();				
+			String contentType = request.getContentType().toLowerCase();				
 			if(contentType.contains("json")) {
 				LoginAccount account = new ObjectMapper().readValue(request.getReader(), LoginAccount.class);				
 				username = account.getUsername();		
 				password = account.getPassword();
-			}			
+			}else {
+				username = request.getParameter(usernameParameter);
+				password = request.getParameter(passwordParameter);
+				
+			}
 			if (username == null) {
 				username = "";
 			}
