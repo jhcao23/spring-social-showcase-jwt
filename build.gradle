@@ -56,7 +56,7 @@ dependencies {
   compile("org.springframework.boot:spring-boot-devtools")
   
   compile("org.projectlombok:lombok")
-  compile("org.springframework.social:spring-social-facebook-extension-mobile:0.0.2.RELEASE")
+  compile("org.springframework.social:spring-social-facebook-extension-mobile:0.0.3.RELEASE")
   
   testCompile("org.springframework.boot:spring-boot-starter-test")
   
