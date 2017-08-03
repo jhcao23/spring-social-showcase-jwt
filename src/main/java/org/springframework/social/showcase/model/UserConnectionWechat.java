@@ -43,6 +43,9 @@ public class UserConnectionWechat {
 	@Column(name="session_key")
 	private String sessionKey;
 	
+	@Column(name="expires")
+	private Long expires;
+	
 	@Column(name="nickname")
 	private String nickname;
 	

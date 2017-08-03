@@ -119,7 +119,7 @@ public class WechatMiniAuthenticationFilter extends AbstractAuthenticationProces
 				String appId = wechatMiniProgramService.getAppId(program);
 				String secret = wechatMiniProgramService.getSecret(program);
 				SessionKeyToken skToken = null;
-				
+				long timestamp = System.currentTimeMillis();				
 				try {
 					ResponseEntity<SessionKeyToken> skTokenResponse = miniProgramUnionApiClient.exchangeCode(appId, secret, code, "authorization_code");
 					skToken = skTokenResponse.getBody();						
@@ -130,6 +130,12 @@ public class WechatMiniAuthenticationFilter extends AbstractAuthenticationProces
 				}
 				if(skToken!=null) {
 					logger.debug("got a session key token: {}", skToken);
+					Integer expiresIn = skToken.getExpiresIn();
+					if(expiresIn!=null) {
+						timestamp += expiresIn*1000;
+					}else {
+						timestamp += 7200*1000;	//Default expires_in 7200 seconds
+					}
 					String openId = skToken.getOpenId();
 					String unionId = skToken.getUnionId();
 					String sessionKey = skToken.getSessionKey();
@@ -137,11 +143,16 @@ public class WechatMiniAuthenticationFilter extends AbstractAuthenticationProces
 					User user = null;
 					if(!ucWechatO.isPresent()) {//create a User with new UserConnectionWechat
 						User user0 = JpaConnectionSignUp.createUser4Connection(authorityRepository);					
-						user0.createUserWithWechatConnection(appId, openId, unionId, sessionKey);
+						user0.createUserWithWechatConnection(appId, openId, unionId, sessionKey, timestamp);
 						user = userRepository.save(user0);
 						
 					}else {//existing User simply login
-						user = ucWechatO.get().getUser();
+						UserConnectionWechat ucWechat = ucWechatO.get();
+						//update sessionKey
+						ucWechat.setSessionKey(sessionKey);
+						ucWechat.setExpires(timestamp);
+						ucWechat = userConnectionWechatRepository.save(ucWechat);
+						user = ucWechat.getUser();						
 					}	
 					if(user!=null) {
 						username = user.getHashId();
@@ -156,6 +167,7 @@ public class WechatMiniAuthenticationFilter extends AbstractAuthenticationProces
 							.map(
 								a->new SimpleGrantedAuthority(a.getAuthorityName())).collect(Collectors.toList()
 							);
+						response.setHeader(JwtAuthenticationSuccessHandler.EXPIRE, ""+timestamp);
 						UsernamePasswordAuthenticationToken authToken = 
 								new UsernamePasswordAuthenticationToken(username, "", grantedAuthorities);	
 						//TODO: let's make it simple, simply return an authenticated one so bypass getAuthenticationManager().authenticate!

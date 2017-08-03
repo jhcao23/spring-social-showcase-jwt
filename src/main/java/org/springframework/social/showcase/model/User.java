@@ -70,11 +70,13 @@ public class User {
 		}
 	}	
 	@Transient 
-	public void createUserWithWechatConnection(String appId, String openId, String unionId, String sessionKey) {
+	public void createUserWithWechatConnection(String appId, String openId, String unionId, String sessionKey, Long expires) {
 		UserConnectionWechat ucWechat = new UserConnectionWechat();
 		ucWechat.setAppId(appId);
 		ucWechat.setOpenId(openId);
 		ucWechat.setUnionId(unionId);
+		ucWechat.setSessionKey(sessionKey);
+		ucWechat.setExpires(expires);
 		this.setHashId(GenerateUniqueKey.getInstance().generateUniqueKeyUsingMessageDigest());
 		this.addWechatConnection(ucWechat);
 	}

@@ -64,6 +64,7 @@ CREATE TABLE User_Connection_Wechat (
     union_id        VARCHAR(255)            ,
     subscribe       TINYINT                 ,
     session_key     VARCHAR(255)            ,
+    expires         BIGINT                  ,
     nickname        VARCHAR(255)            ,
     sex             TINYINT                 ,
     city            VARCHAR(255)            ,

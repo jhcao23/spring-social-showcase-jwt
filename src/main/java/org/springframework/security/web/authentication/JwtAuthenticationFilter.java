@@ -1,6 +1,8 @@
 package org.springframework.security.web.authentication;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Date;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -11,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.social.showcase.service.JwtFullInfo;
 import org.springframework.social.showcase.service.JwtTokenService;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
@@ -40,11 +44,14 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 	        final String authHeader = request.getHeader(JwtTokenService.AUTHORIZATION);
 	        if(authHeader!=null) {//from now on, confirm header has Authorization, then JWT authentication starts!
 		        final String token = getTokenFromHeader(authHeader);
-		        if(token!=null){
-			        	String hashId = JwtTokenService.getHashId(token);
-			        	if(hashId!=null){
+		        if(token!=null){	        	
+		        		JwtFullInfo info = JwtTokenService.getFullInfo(token);
+			        	String hashId = info.getHashId();
+			        	Date expiry = info.getExpiry();
+			        	Collection<GrantedAuthority> grantedAuthorityList = info.getGrantedAuthorityList();
+			        	if(expiry!=null && expiry.getTime()>System.currentTimeMillis() && hashId!=null){
 			        		SecurityContextHolder.getContext().setAuthentication(
-			        			new UsernamePasswordAuthenticationToken(hashId, null, null)
+			        			new UsernamePasswordAuthenticationToken(hashId, null, grantedAuthorityList)
 			        		);
 			        	}else{
 			        		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
