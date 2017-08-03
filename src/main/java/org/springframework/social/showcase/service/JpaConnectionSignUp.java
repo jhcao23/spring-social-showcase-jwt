@@ -19,14 +19,19 @@ public class JpaConnectionSignUp implements ConnectionSignUp {
 	
 	@Override
 	public String execute(Connection<?> connection) {
+		User user = createUser4Connection(authorityRepository);
+		user = userRepository.save(user);
+		return user.getHashId();
+	}
+	
+	public static User createUser4Connection(AuthorityRepository authorityRepository) {
 		User user = new User();
 		String hashId = GenerateUniqueKey.getInstance().generateUniqueKeyUsingMessageDigest();
 		user.setHashId(hashId);
 		//add ROLE_USER
-		Authority authority = this.authorityRepository.findOne(Authority.ID_ROLE_USER);
-		user.addAuthority(authority);
-		user = userRepository.save(user);
-		return user.getHashId();
+		Authority authority = authorityRepository.findOne(Authority.ID_ROLE_USER);
+		user.addAuthority(authority);		
+		return user;
 	}
 
 }

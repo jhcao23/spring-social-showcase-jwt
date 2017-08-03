@@ -4,9 +4,7 @@ import static org.springframework.security.web.authentication.UsernamePasswordAu
 import static org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY;
 
 import java.io.IOException;
-import java.util.Optional;
 
-import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,11 +16,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.social.showcase.model.LoginAccount;
-import org.springframework.social.showcase.model.User;
 import org.springframework.social.showcase.repository.UserRepository;
-import org.springframework.social.showcase.service.JwtTokenService;
 import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -41,7 +36,7 @@ public class JwtUsernamePasswordAuthenticationFilter extends AbstractAuthenticat
 	public static final String DEFAULT_REST_LOGIN_URL = "/rest/signin";
 	public static final String DEFAULT_WEB_LOGIN_URL = "/signin/authenticate";
 	
-	private UserRepository userRepository;
+//	private UserRepository userRepository;
 	private boolean postOnly = true;	
 	
 	public JwtUsernamePasswordAuthenticationFilter(UserRepository userRepository) {
@@ -51,28 +46,29 @@ public class JwtUsernamePasswordAuthenticationFilter extends AbstractAuthenticat
 				new AntPathRequestMatcher(DEFAULT_WEB_LOGIN_URL, "POST")
 			)
 		);
-		this.userRepository = userRepository;
+//		this.userRepository = userRepository;
+		this.setAuthenticationSuccessHandler((new JwtAuthenticationSuccessHandler(userRepository)));
 	}
 
 	//TODO: consider to use super.successfulAuthentication (remove this method)
-	//but set a different successHandler called JwtUsernamePasswordAuthenticationSuccessHandler?
-	@Override
-	protected void successfulAuthentication(HttpServletRequest request,
-			HttpServletResponse response, FilterChain chain, Authentication authResult)
-			throws IOException, ServletException {
-		String username = authResult.getName();
-		if(StringUtils.isEmpty(username))
-			return ;
-		Optional<User> optional = userRepository.findByHashId(username); 
-		if(optional.isPresent()){
-			User user = optional.get();
-			String token = JwtTokenService.getToken4User(user);
-			response.setContentType("application/json");
-			response.addHeader(JwtTokenService.AUTH_HEADER_NAME, token);
-		}		
-		//hello don't call super, we just want to set HEADER; otherwise super will redirect
-//		super.successfulAuthentication(request, response, chain, authResult);
-	}
+	//but set a different successHandler called JwtAuthenticationSuccessHandler?
+//	@Override
+//	protected void successfulAuthentication(HttpServletRequest request,
+//			HttpServletResponse response, FilterChain chain, Authentication authResult)
+//			throws IOException, ServletException {
+//		String username = authResult.getName();
+//		if(StringUtils.isEmpty(username))
+//			return ;
+//		Optional<User> optional = userRepository.findByHashId(username); 
+//		if(optional.isPresent()){
+//			User user = optional.get();
+//			String token = JwtTokenService.getToken4User(user);
+//			response.setContentType("application/json");
+//			response.addHeader(JwtTokenService.AUTH_HEADER_NAME, token);
+//		}		
+//		//hello don't call super, we just want to set HEADER; otherwise super will redirect
+////		super.successfulAuthentication(request, response, chain, authResult);
+//	}
 	
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)

@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.social.showcase.model.User;
 import org.springframework.social.showcase.repository.UserRepository;
@@ -22,18 +23,20 @@ import org.springframework.util.StringUtils;
  * @author jhcao
  *
  */
-public class JwtUsernamePasswordAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public class JwtAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
 	private UserRepository userRepository;
 	
-	public JwtUsernamePasswordAuthenticationSuccessHandler(UserRepository userRepository) {
+	public JwtAuthenticationSuccessHandler(UserRepository userRepository) {
 		super();
 		this.userRepository = userRepository;
 	}
-	public JwtUsernamePasswordAuthenticationSuccessHandler(UserRepository userRepository, String defaultTargetUrl) {
-		super(defaultTargetUrl);
-		this.userRepository = userRepository;
-	}
+	
+	//we don't need redirect so no need for defaultTargetUrl
+//	public JwtAuthenticationSuccessHandler(UserRepository userRepository, String defaultTargetUrl) {
+//		super(defaultTargetUrl);
+//		this.userRepository = userRepository;
+//	}
 
 	/* (non-Javadoc)
 	 * @see org.springframework.security.web.authentication.AuthenticationSuccessHandler#onAuthenticationSuccess(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.security.core.Authentication)
@@ -42,12 +45,13 @@ public class JwtUsernamePasswordAuthenticationSuccessHandler extends SimpleUrlAu
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 		String username = authentication.getName();
-		if(StringUtils.isEmpty(username))
+		if(!authentication.isAuthenticated() || StringUtils.isEmpty(username))
 			return ;
 		Optional<User> optional = userRepository.findByHashId(username); 
 		if(optional.isPresent()){
 			User user = optional.get();
 			String token = JwtTokenService.getToken4User(user);
+			response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 			response.addHeader(JwtTokenService.AUTH_HEADER_NAME, token);
 		}	
 	}

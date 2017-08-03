@@ -37,13 +37,19 @@ import org.springframework.security.web.authentication.JwtAuthenticationFilter;
 import org.springframework.security.web.authentication.JwtSocialAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.JwtUsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.WechatMiniAuthenticationFilter;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 import org.springframework.social.UserIdSource;
 import org.springframework.social.security.SocialAuthenticationFilter;
 import org.springframework.social.security.SpringSocialConfigurer;
+import org.springframework.social.showcase.repository.AuthorityRepository;
+import org.springframework.social.showcase.repository.UserConnectionWechatRepository;
 import org.springframework.social.showcase.repository.UserRepository;
+import org.springframework.social.showcase.service.WechatMiniProgramService;
 import org.springframework.web.filter.CorsFilter;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
+
+import technology.touchmars.feign.wechat.client.api.MiniProgramUnionApiClient;
 
 /**
  * Security Configuration.
@@ -60,20 +66,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	private JwtSocialAuthenticationSuccessHandler jwtSocialAuthenticationSuccessHandler;
 	
 	@Autowired
-	private UserRepository userRepository;
+	private UserRepository userRepository;	
 	@Autowired
 	private UserDetailsService userDetailsService;
+	@Autowired
+	private AuthorityRepository authorityRepository;
+
+	// wechat mini program
+	@Autowired
+	private WechatMiniProgramService wechatMiniProgramService;
+	@Autowired
+	private UserConnectionWechatRepository userConnectionWechatRepository;
+	@Autowired
+	private MiniProgramUnionApiClient miniProgramUnionApiClient;
 	
 	@Autowired
 	private CorsFilter corsFilter;
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web
-			.ignoring()
-				.antMatchers("/**/*.css", "/**/*.png", "/**/*.gif", "/**/*.jpg")
-					
-		;
+		web.ignoring().antMatchers("/**/*.css", "/**/*.png", "/**/*.gif", "/**/*.jpg");
 	}
 	
 	@Override
@@ -102,10 +114,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 //					.antMatchers("/rest/signin").permitAll()
 					.antMatchers("/", "/webjars/**", "/admin/**", "/favicon.ico", "/resources/**", "/auth/**", "/signin/**", "/signup/**", "/disconnect/facebook").permitAll()
 					.antMatchers("/**").authenticated()
-			.and()
-				.rememberMe()
+//			.and()
+//				.rememberMe()
 			.and()
 				.addFilterBefore(new JwtAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class)
+				.addFilterBefore(getWechatMiniAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class)
 				.addFilterBefore(corsFilter, JwtAuthenticationFilter.class)
 				.addFilterBefore(getJwtUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 			.apply(getSpringSocialConfigurer())
@@ -142,6 +155,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	    	filter.setAuthenticationManager(this.authenticationManager());
 	    	return filter;
     }
+    
+    //Wechat
+
+	@Bean
+	public WechatMiniAuthenticationFilter getWechatMiniAuthenticationFilter() throws Exception {
+		WechatMiniAuthenticationFilter filter = 
+			new WechatMiniAuthenticationFilter(wechatMiniProgramService,
+				miniProgramUnionApiClient, userRepository, 
+				userConnectionWechatRepository, authorityRepository, null);
+		filter.setAuthenticationManager(this.authenticationManager());
+		return filter;
+	}
+	
+    //general Social
     
     public SpringSocialConfigurer getSpringSocialConfigurer(){
 	    	SpringSocialConfigurer ssc = new SpringSocialConfigurer();

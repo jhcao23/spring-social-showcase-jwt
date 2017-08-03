@@ -18,11 +18,14 @@ spring:
       repositories:
         enabled: true        
   jpa:
+#    properties:
+#      hibernate:
+#        enable_lazy_load_no_trans: true
     show-sql: true
-    hibernate:
+    hibernate:      
       naming:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
-      ddl-auto: none            
+      ddl-auto: none                  
 logging:
   file: showcase.log
   level:
@@ -33,3 +36,7 @@ logging:
     org.springframework.security.web: TRACE
     org.springframework.security.web.authentication: TRACE  
     org.springframework.web.cors: TRACE  
+wechat:
+  mini:
+    app-id: wxc9213fff88a427f0
+    secret: 2e6bc5e65e470acf77d545d72ad61d4a    

@@ -65,9 +65,4 @@ public class JwtSocialAuthenticationSuccessHandler extends SavedRequestAwareAuth
 		super.onAuthenticationSuccess(request, response, authentication);
 	}
 	
-//	private Cookie createCookieForToken(String token) {
-//		final Cookie authCookie = new Cookie(AUTH_HEADER_NAME, token);
-//		authCookie.setPath("/");
-//		return authCookie;
-//	}
 }
