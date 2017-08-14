@@ -47,7 +47,7 @@ import org.springframework.social.showcase.repository.UserConnectionWechatReposi
 import org.springframework.social.showcase.repository.UserRepository;
 import org.springframework.social.showcase.service.WechatMiniProgramService;
 import org.springframework.web.filter.CorsFilter;
-import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
+//import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 
 import technology.touchmars.feign.wechat.client.api.MiniProgramUnionApiClient;
 
@@ -94,26 +94,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
 				.csrf().disable()
-				.formLogin()
-				.loginPage("/login")			//"signin" will cause a crazy error
-				.usernameParameter("username")
-				.passwordParameter("password")
-				.loginProcessingUrl("/signin/authenticate")
-				.defaultSuccessUrl("/connect")
-				.failureUrl("/signin?error=bad_credentials")
-				.permitAll()
-			.and()
-				.logout()
-					.logoutUrl("/signout")
-					.deleteCookies("JSESSIONID")
-					.permitAll()
-			.and()
+//				.formLogin()
+//				.loginPage("/login")			//"signin" will cause a crazy error
+//				.usernameParameter("username")
+//				.passwordParameter("password")
+//				.loginProcessingUrl("/signin/authenticate")
+//				.defaultSuccessUrl("/connect")
+//				.failureUrl("/signin?error=bad_credentials")
+//				.permitAll()
+//			.and()
+//				.logout()
+//					.logoutUrl("/signout")
+//					.deleteCookies("JSESSIONID")
+//					.permitAll()
+//			.and()
 				.authorizeRequests()
 					.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()		
 					.antMatchers("/rest/signup").permitAll()
 //					.antMatchers("/rest/signin").permitAll()
 					.antMatchers("/", "/webjars/**", "/admin/**", "/favicon.ico", "/resources/**", "/auth/**", "/signin/**", "/signup/**", "/disconnect/facebook").permitAll()
-					.antMatchers("/**").authenticated()
+					.antMatchers("/**").authenticated()				
+//			.and().exceptionHandling()
 //			.and()
 //				.rememberMe()
 			.and()
@@ -143,10 +144,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		return Encryptors.noOpText();
 	}
 	
-	@Bean
-	public SpringSecurityDialect springSecurityDialect() {
-		return new SpringSecurityDialect();
-	}
+//	@Bean
+//	public SpringSecurityDialect springSecurityDialect() {
+//		return new SpringSecurityDialect();
+//	}
 	
 	 //JWT Stateless
 

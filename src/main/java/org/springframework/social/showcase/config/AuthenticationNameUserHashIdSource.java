@@ -20,7 +20,7 @@ import java.util.Optional;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
-import org.springframework.social.showcase.model.User;
+import org.springframework.social.showcase.model.TouchUser;
 import org.springframework.social.showcase.repository.UserRepository;
 
 /**
@@ -42,11 +42,11 @@ public class AuthenticationNameUserHashIdSource extends AuthenticationNameUserId
 	public String getUserId() {
 		String username = super.getUserId();
 //		Optional<User> user = userRepository.findByHashIdOrAccountUsername(username, username);	//anonymousUser
-		Optional<User> user = userRepository.findByHashId(username);
+		Optional<TouchUser> user = userRepository.findByHashId(username);
 		if(!user.isPresent()){
 			throw new IllegalStateException("Unable to get a ConnectionRepository: no user signed in::"+username);
 		}else{
-			User u = user.get();
+			TouchUser u = user.get();
 			return u.getHashId();
 		}
 	}

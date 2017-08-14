@@ -21,7 +21,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.social.showcase.model.User;
+import org.springframework.social.showcase.model.TouchUser;
 import org.springframework.social.showcase.model.UserConnectionWechat;
 import org.springframework.social.showcase.repository.AuthorityRepository;
 import org.springframework.social.showcase.repository.UserConnectionWechatRepository;
@@ -140,9 +140,9 @@ public class WechatMiniAuthenticationFilter extends AbstractAuthenticationProces
 					String unionId = skToken.getUnionId();
 					String sessionKey = skToken.getSessionKey();
 					Optional<UserConnectionWechat> ucWechatO = userConnectionWechatRepository.findByAppIdAndOpenId(appId, openId);
-					User user = null;
+					TouchUser user = null;
 					if(!ucWechatO.isPresent()) {//create a User with new UserConnectionWechat
-						User user0 = JpaConnectionSignUp.createUser4Connection(authorityRepository);					
+						TouchUser user0 = JpaConnectionSignUp.createUser4Connection(authorityRepository);					
 						user0.createUserWithWechatConnection(appId, openId, unionId, sessionKey, timestamp);
 						user = userRepository.save(user0);
 						
@@ -165,7 +165,7 @@ public class WechatMiniAuthenticationFilter extends AbstractAuthenticationProces
 							user.getAuthorityList()
 							.stream()
 							.map(
-								a->new SimpleGrantedAuthority(a.getAuthorityName())).collect(Collectors.toList()
+								a->new SimpleGrantedAuthority(a.getName())).collect(Collectors.toList()
 							);
 						response.setHeader(JwtAuthenticationSuccessHandler.EXPIRE, ""+timestamp);
 						UsernamePasswordAuthenticationToken authToken = 

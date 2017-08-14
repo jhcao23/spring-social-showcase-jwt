@@ -34,7 +34,7 @@ import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.showcase.model.Authority;
-import org.springframework.social.showcase.model.User;
+import org.springframework.social.showcase.model.TouchUser;
 import org.springframework.social.showcase.repository.AuthorityRepository;
 import org.springframework.social.showcase.repository.UserRepository;
 import org.springframework.validation.BindingResult;
@@ -77,7 +77,7 @@ public class RestSignupController {
 			if(userRepository.findByAccountUsername(username).isPresent()) {
 				return ResponseEntity.status(HttpStatus.IM_USED).body("username is already used!");//226
 			}
-			User user = createUser(form, formBinding, authority);
+			TouchUser user = createUser(form, formBinding, authority);
 			//successfully created a User
 			if (user != null) {
 				SecurityContextHolder.getContext().setAuthentication(
@@ -98,9 +98,9 @@ public class RestSignupController {
 
 	// internal helpers
 	
-	private User createUser(SignupForm form, BindingResult formBinding, Authority authority) {
+	private TouchUser createUser(SignupForm form, BindingResult formBinding, Authority authority) {
 		try {
-			User user = new User();
+			TouchUser user = new TouchUser();
 			user.assembleUser(form.getUsername(), form.getPassword(), form.getFirstName(), form.getLastName());
 			user.addAuthority(authority);
 			return userRepository.save(user);			

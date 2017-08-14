@@ -26,61 +26,39 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode(callSuper=false, exclude="touchUser")
 @Entity
 public class Account extends LoginAccount {
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO, generator="native")
+	@GenericGenerator(name = "native", strategy = "native")
 	private int id; 
 	
+	@Column(nullable = true, name="first_name")
 	private String firstName;
 
+	@Column(nullable = true, name="last_name")
 	private String lastName;
 	
-	private User user;
+	@OneToOne(fetch=FetchType.LAZY, optional=false)
+	@JoinColumn(nullable=false, name="user_id")
+	private TouchUser touchUser;
 
 	public Account() {
 		super();
 	}
 
 	public Account(String username, String password, String firstName, String lastName) {
+		super();
 		this.setUsername(username);
 		this.setPassword(password);
 		this.firstName = firstName;
 		this.lastName = lastName;
-	}
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO, generator="native")
-	@GenericGenerator(name = "native", strategy = "native")
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-	@Column(nullable = true, name="first_name")
-	public String getFirstName() {
-		return firstName;
-	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	
-	@Column(nullable = true, name="last_name")
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-	
-	@OneToOne(fetch=FetchType.LAZY, optional=false)
-	@JoinColumn(nullable=false, name="user_id")
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 }

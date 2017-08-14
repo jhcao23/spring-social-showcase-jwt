@@ -14,7 +14,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class UserConnection extends ConnectionAttributes {
 
 	private Long id; 
-	private User user;
+	private TouchUser user;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO, generator="native")
@@ -28,10 +28,10 @@ public class UserConnection extends ConnectionAttributes {
 	
 	@ManyToOne(fetch=FetchType.LAZY, optional=false)
 	@JoinColumn(nullable=false, name="user_id")	
-	public User getUser() {
+	public TouchUser getUser() {
 		return user;
 	}
-	public void setUser(User user) {
+	public void setUser(TouchUser user) {
 		this.user = user;
 	}
 	

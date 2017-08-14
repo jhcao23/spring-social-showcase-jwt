@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
-import org.springframework.social.showcase.model.User;
+import org.springframework.social.showcase.model.TouchUser;
 import org.springframework.social.showcase.repository.UserRepository;
 import org.springframework.social.showcase.service.JwtTokenService;
 import org.springframework.util.StringUtils;
@@ -56,10 +56,10 @@ public class JwtAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucc
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		Optional<User> optional = userRepository.findByHashId(username); 
+		Optional<TouchUser> optional = userRepository.findByHashId(username); 
 		if(optional.isPresent()){
-			User user = optional.get();
-			String token = JwtTokenService.getToken4User(user, user.getAuthorityList(), timestamp);
+			TouchUser user = optional.get();
+			String token = JwtTokenService.getToken4User(user.getHashId(), user.getAuthorityList(), timestamp);
 			response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 			response.addHeader(JwtTokenService.AUTH_HEADER_NAME, token);
 		}	

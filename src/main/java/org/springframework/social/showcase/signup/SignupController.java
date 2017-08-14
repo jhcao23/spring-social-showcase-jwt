@@ -32,7 +32,7 @@ import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.showcase.message.Message;
 import org.springframework.social.showcase.message.MessageType;
 import org.springframework.social.showcase.model.Authority;
-import org.springframework.social.showcase.model.User;
+import org.springframework.social.showcase.model.TouchUser;
 import org.springframework.social.showcase.repository.AuthorityRepository;
 import org.springframework.social.showcase.repository.UserRepository;
 import org.springframework.stereotype.Controller;
@@ -76,7 +76,7 @@ public class SignupController {
 			return null;
 		}
 		Authority authority = authorityRepository.findOne(Authority.ID_ROLE_USER);
-		User user = createUser(form, formBinding, authority);
+		TouchUser user = createUser(form, formBinding, authority);
 		if (user != null) {
 			SecurityContextHolder.getContext().setAuthentication(
 				new UsernamePasswordAuthenticationToken(user.getHashId(), null, null)
@@ -91,9 +91,9 @@ public class SignupController {
 
 	// internal helpers
 	
-	private User createUser(SignupForm form, BindingResult formBinding, Authority authority) {
+	private TouchUser createUser(SignupForm form, BindingResult formBinding, Authority authority) {
 		try {
-			User user = new User();
+			TouchUser user = new TouchUser();
 			user.assembleUser(form.getUsername(), form.getPassword(), form.getFirstName(), form.getLastName());
 			user.addAuthority(authority);
 			return userRepository.save(user);			

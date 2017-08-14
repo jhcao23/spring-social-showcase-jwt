@@ -19,7 +19,7 @@ import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.DuplicateConnectionException;
 import org.springframework.social.connect.NotConnectedException;
 import org.springframework.social.showcase.model.ConnectionProperty;
-import org.springframework.social.showcase.model.User;
+import org.springframework.social.showcase.model.TouchUser;
 import org.springframework.social.showcase.model.UserConnection;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -168,7 +168,7 @@ public class JpaConnectionRepository implements ConnectionRepository {
 	
 	private UserConnection convert2UserConnection(Integer rank, ConnectionData data){
 		UserConnection uc = new UserConnection();
-		User user = userRepository.findOne(userId);
+		TouchUser user = userRepository.findOne(userId);
 		uc.setUser(user);
 		uc.setProviderId(data.getProviderId());
 		uc.setProviderUserId(data.getProviderUserId());

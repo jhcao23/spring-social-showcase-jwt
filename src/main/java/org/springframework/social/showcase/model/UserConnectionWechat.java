@@ -26,7 +26,7 @@ public class UserConnectionWechat {
 	
 	@ManyToOne(fetch=FetchType.EAGER, optional=false)
 	@JoinColumn(nullable=false, name="user_id")	
-	private User user;
+	private TouchUser user;
 	
 	@Column(name="app_id")
 	private String appId;

@@ -21,7 +21,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=false)
 @Entity(name="Authority")
 @Immutable
-public class Authority extends CommonEntity {
+public class Authority implements ImmutableEntity {
 
 	public static final int ID_ROLE_USER = 1;
 	public static final int ID_ROLE_ADMIN = 2;
@@ -31,9 +31,10 @@ public class Authority extends CommonEntity {
 	private Integer id;
 	
 	@Column(unique = true, nullable = false, name="authority_name")
-	private String authorityName;
+	private String name;
 	
 	@Column(name="description")
 	private String description;
+	
 	
 }

@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.JwtRedirectStrategy;
-import org.springframework.social.showcase.model.User;
+import org.springframework.social.showcase.model.TouchUser;
 import org.springframework.social.showcase.repository.UserRepository;
 import org.springframework.util.StringUtils;
 
@@ -50,10 +50,10 @@ public class JwtSocialAuthenticationSuccessHandler extends SavedRequestAwareAuth
 			String hashId = authentication.getName();
 			logger.debug("hashId={}", hashId);
 			if(!StringUtils.isEmpty(hashId)){
-				Optional<User> optional = userRepository.findByHashId(hashId);
+				Optional<TouchUser> optional = userRepository.findByHashId(hashId);
 				if(optional.isPresent()){
 					logger.debug("user is present!");
-					User user = optional.get();
+					TouchUser user = optional.get();
 					String token = getToken4User(user);
 					logger.debug("token is {} to add to header {}", token, AUTH_HEADER_NAME);
 					response.addHeader(AUTH_HEADER_NAME, token);

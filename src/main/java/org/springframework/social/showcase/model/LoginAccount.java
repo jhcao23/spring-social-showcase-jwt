@@ -3,26 +3,17 @@ package org.springframework.social.showcase.model;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode(callSuper=false)
 @MappedSuperclass
 public class LoginAccount {
 
+	@Column(unique = true, nullable = false, name="username")
 	private String username;
+	@Column(nullable = false)
 	private String password;
 
-	@Column(unique = true, nullable = false, name="username")
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}	
-	
-	@Column(nullable = false)
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
 }

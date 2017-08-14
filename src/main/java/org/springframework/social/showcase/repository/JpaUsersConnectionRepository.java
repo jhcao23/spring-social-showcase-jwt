@@ -13,7 +13,7 @@ import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.UsersConnectionRepository;
-import org.springframework.social.showcase.model.User;
+import org.springframework.social.showcase.model.TouchUser;
 
 public class JpaUsersConnectionRepository implements UsersConnectionRepository {
 
@@ -79,7 +79,7 @@ public class JpaUsersConnectionRepository implements UsersConnectionRepository {
 		if (username == null) {
 			throw new IllegalArgumentException("userId cannot be null");
 		}
-		Optional<User> user = userRepository.findByHashId(username);
+		Optional<TouchUser> user = userRepository.findByHashId(username);
 		if(user.isPresent()==false){
 			System.out.println("createConnectionRepository::"+username+" failed 1st time!");
 //			user = userRepository.findByHashId(username);

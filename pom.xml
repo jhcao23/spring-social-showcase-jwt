@@ -1,0 +1,166 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>spring-social-showcase</artifactId>
+	<groupId>technology.touchmars</groupId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	
+	<properties>
+		<java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <swagger-core-version>1.5.12</swagger-core-version>
+        <wechat.client.version>0.0.1.RELEASE</wechat.client.version>            
+        <spring-cloud.version>Dalston.SR2</spring-cloud.version>  
+        <spring-io.version>Brussels-SR4</spring-io.version>  
+        <wechat-client-mini-version>1.0.1-SNAPSHOT</wechat-client-mini-version>
+        <spring-social-facebook-extension-mobile-version>0.0.3.RELEASE</spring-social-facebook-extension-mobile-version>
+	</properties>
+	<parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.6.RELEASE</version>
+    </parent>
+    
+    <dependencies>
+<!--         <dependency> -->
+<!--             <groupId>io.swagger</groupId> -->
+<!--             <artifactId>swagger-annotations</artifactId> -->
+<!--             <version>${swagger-core-version}</version> -->
+<!--         </dependency> -->
+
+		<dependency>
+			<groupId>org.springframework.social</groupId>
+			<artifactId>spring-social-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.social</groupId>
+			<artifactId>spring-social-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-social-facebook</artifactId>
+		</dependency>	
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-social-twitter</artifactId>
+		</dependency>				
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>				
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>		
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.social</groupId>
+			<artifactId>spring-social-facebook-extension-mobile</artifactId>
+			<version>${spring-social-facebook-extension-mobile-version}</version>
+		</dependency>
+
+        <dependency>
+        		<groupId>technology.touchmars</groupId>
+        		<artifactId>wechat-client-mini</artifactId>
+        		<version>${wechat-client-mini-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-feign</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-netflix-core</artifactId>
+        </dependency>
+	    
+	    <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>  
+        <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-devtools</artifactId>
+	        <optional>true</optional>
+	    </dependency>  
+    </dependencies>   
+    
+    <build>
+	    <plugins>
+	        <plugin>
+	            <groupId>org.springframework.boot</groupId>
+	            <artifactId>spring-boot-maven-plugin</artifactId>
+	        </plugin>
+	    </plugins>
+	</build> 
+    
+    <dependencyManagement>
+    		<dependencies>
+             <dependency>
+	            <groupId>org.springframework.cloud</groupId>
+	            <artifactId>spring-cloud-dependencies</artifactId>
+	            <version>${spring-cloud.version}</version>
+	            <type>pom</type>
+	            <scope>import</scope>
+	        </dependency>
+	        <dependency>
+	            <groupId>io.spring.platform</groupId>
+	            <artifactId>platform-bom</artifactId>
+	            <version>${spring-io.version}</version>
+	            <type>pom</type>
+	            <scope>import</scope>
+	        </dependency>
+         </dependencies>
+    </dependencyManagement>
+    
+    <repositories>
+        <repository>
+            <id>github</id>
+            <name>github archetype</name>
+            <url>https://raw.githubusercontent.com/jhcao23/archetype/master</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+    
+</project>
