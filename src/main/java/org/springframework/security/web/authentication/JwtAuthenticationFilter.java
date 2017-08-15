@@ -15,11 +15,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.social.showcase.service.JwtFullInfo;
-import org.springframework.social.showcase.service.JwtTokenService;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
+
+import technology.touchmars.showcase.service.JwtFullInfo;
+import technology.touchmars.showcase.service.JwtTokenService;
 
 public class JwtAuthenticationFilter extends GenericFilterBean {
 

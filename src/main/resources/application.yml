@@ -30,7 +30,7 @@ logging:
   file: showcase.log
   level:
     org.springframework.social: TRACE
-    org.springframework.social.showcase: TRACE    
+    technology.touchmars.showcase: TRACE    
     org.thymeleaf: TRACE
     org.springframework.security: TRACE
     org.springframework.security.web: TRACE

@@ -12,10 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
-import org.springframework.social.showcase.model.TouchUser;
-import org.springframework.social.showcase.repository.UserRepository;
-import org.springframework.social.showcase.service.JwtTokenService;
 import org.springframework.util.StringUtils;
+
+import technology.touchmars.showcase.model.TouchUser;
+import technology.touchmars.showcase.repository.UserRepository;
+import technology.touchmars.showcase.service.JwtTokenService;
 
 /**
  * Serve for JwtUsernamePasswordAuthenticationFilter.

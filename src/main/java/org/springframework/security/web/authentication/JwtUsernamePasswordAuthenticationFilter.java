@@ -15,11 +15,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
-import org.springframework.social.showcase.model.LoginAccount;
-import org.springframework.social.showcase.repository.UserRepository;
 import org.springframework.util.Assert;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import technology.touchmars.showcase.model.LoginAccount;
+import technology.touchmars.showcase.repository.UserRepository;
 
 /**
  * Learn from UsernamePasswordAuthenticationFilter from Spring Security,

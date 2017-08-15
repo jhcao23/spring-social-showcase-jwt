@@ -21,13 +21,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.social.showcase.model.TouchUser;
-import org.springframework.social.showcase.model.UserConnectionWechat;
-import org.springframework.social.showcase.repository.AuthorityRepository;
-import org.springframework.social.showcase.repository.UserConnectionWechatRepository;
-import org.springframework.social.showcase.repository.UserRepository;
-import org.springframework.social.showcase.service.JpaConnectionSignUp;
-import org.springframework.social.showcase.service.WechatMiniProgramService;
 import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,6 +29,13 @@ import lombok.Data;
 import technology.touchmars.feign.wechat.client.api.MiniProgramUnionApiClient;
 import technology.touchmars.feign.wechat.client.config.WechatClientException;
 import technology.touchmars.feign.wechat.client.model.SessionKeyToken;
+import technology.touchmars.showcase.model.TouchUser;
+import technology.touchmars.showcase.model.UserConnectionWechat;
+import technology.touchmars.showcase.repository.AuthorityRepository;
+import technology.touchmars.showcase.repository.UserConnectionWechatRepository;
+import technology.touchmars.showcase.repository.UserRepository;
+import technology.touchmars.showcase.service.JpaConnectionSignUp;
+import technology.touchmars.showcase.service.WechatMiniProgramService;
 
 /**
  * This is the API|URL for login requested from wechat mini program.
@@ -152,7 +152,7 @@ public class WechatMiniAuthenticationFilter extends AbstractAuthenticationProces
 						ucWechat.setSessionKey(sessionKey);
 						ucWechat.setExpires(timestamp);
 						ucWechat = userConnectionWechatRepository.save(ucWechat);
-						user = ucWechat.getUser();						
+						user = ucWechat.getTouchUser();						
 					}	
 					if(user!=null) {
 						username = user.getHashId();
