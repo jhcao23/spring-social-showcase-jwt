@@ -6,6 +6,7 @@ package technology.touchmars.template.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.NaturalId;
@@ -35,6 +36,11 @@ public class Authority implements ImmutableEntity {
 	
 	@Column(name="description")
 	private String description;
+	
+	@Transient
+	public String getCode() {
+		return name;
+	}
 	
 	
 }
