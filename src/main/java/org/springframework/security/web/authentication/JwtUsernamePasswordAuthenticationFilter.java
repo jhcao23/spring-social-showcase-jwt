@@ -19,8 +19,8 @@ import org.springframework.util.Assert;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import technology.touchmars.showcase.model.LoginAccount;
-import technology.touchmars.showcase.repository.UserRepository;
+import technology.touchmars.template.model.LoginAccount;
+import technology.touchmars.template.repository.UserRepository;
 
 /**
  * Learn from UsernamePasswordAuthenticationFilter from Spring Security,

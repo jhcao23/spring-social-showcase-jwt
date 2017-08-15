@@ -14,9 +14,9 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.util.StringUtils;
 
-import technology.touchmars.showcase.model.TouchUser;
-import technology.touchmars.showcase.repository.UserRepository;
-import technology.touchmars.showcase.service.JwtTokenService;
+import technology.touchmars.template.model.TouchUser;
+import technology.touchmars.template.repository.UserRepository;
+import technology.touchmars.template.service.JwtTokenService;
 
 /**
  * Serve for JwtUsernamePasswordAuthenticationFilter.

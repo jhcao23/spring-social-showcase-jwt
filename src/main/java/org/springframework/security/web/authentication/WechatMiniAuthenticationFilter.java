@@ -29,13 +29,13 @@ import lombok.Data;
 import technology.touchmars.feign.wechat.client.api.MiniProgramUnionApiClient;
 import technology.touchmars.feign.wechat.client.config.WechatClientException;
 import technology.touchmars.feign.wechat.client.model.SessionKeyToken;
-import technology.touchmars.showcase.model.TouchUser;
-import technology.touchmars.showcase.model.UserConnectionWechat;
-import technology.touchmars.showcase.repository.AuthorityRepository;
-import technology.touchmars.showcase.repository.UserConnectionWechatRepository;
-import technology.touchmars.showcase.repository.UserRepository;
-import technology.touchmars.showcase.service.JpaConnectionSignUp;
-import technology.touchmars.showcase.service.WechatMiniProgramService;
+import technology.touchmars.template.model.TouchUser;
+import technology.touchmars.template.model.UserConnectionWechat;
+import technology.touchmars.template.repository.AuthorityRepository;
+import technology.touchmars.template.repository.UserConnectionWechatRepository;
+import technology.touchmars.template.repository.UserRepository;
+import technology.touchmars.template.service.JpaConnectionSignUp;
+import technology.touchmars.template.service.WechatMiniProgramDiscoveryService;
 
 /**
  * This is the API|URL for login requested from wechat mini program.
@@ -61,11 +61,11 @@ public class WechatMiniAuthenticationFilter extends AbstractAuthenticationProces
 	private AuthorityRepository authorityRepository;
 	private UserConnectionWechatRepository userConnectionWechatRepository;
 	private MiniProgramUnionApiClient miniProgramUnionApiClient;
-	private WechatMiniProgramService wechatMiniProgramService;
+	private WechatMiniProgramDiscoveryService wechatMiniProgramDiscoveryService;
 	private boolean postOnly = true;	
 	
 	public WechatMiniAuthenticationFilter(
-		WechatMiniProgramService wechatMiniProgramService,
+		WechatMiniProgramDiscoveryService wechatMiniProgramDiscoveryService,
 		MiniProgramUnionApiClient miniProgramUnionApiClient, 
 		UserRepository userRepository, 
 		UserConnectionWechatRepository connectionWechatRepository, 
@@ -73,7 +73,7 @@ public class WechatMiniAuthenticationFilter extends AbstractAuthenticationProces
 		String url) {
 		super(new AntPathRequestMatcher(StringUtils.hasText(url)?url:DEFAULT_REST_LOGIN_URL, "POST"));
 		this.miniProgramUnionApiClient = miniProgramUnionApiClient;
-		this.wechatMiniProgramService = wechatMiniProgramService;
+		this.wechatMiniProgramDiscoveryService = wechatMiniProgramDiscoveryService;
 		this.userRepository = userRepository;
 		this.authorityRepository = authorityRepository;
 		this.userConnectionWechatRepository = connectionWechatRepository;
@@ -116,8 +116,8 @@ public class WechatMiniAuthenticationFilter extends AbstractAuthenticationProces
 				ProgramCode programCode = new ObjectMapper().readValue(request.getReader(), ProgramCode.class);				
 				code = programCode.getCode();
 				program = programCode.getProgram();
-				String appId = wechatMiniProgramService.getAppId(program);
-				String secret = wechatMiniProgramService.getSecret(program);
+				String appId = wechatMiniProgramDiscoveryService.getAppId(program);
+				String secret = wechatMiniProgramDiscoveryService.getSecret(program);
 				SessionKeyToken skToken = null;
 				long timestamp = System.currentTimeMillis();				
 				try {

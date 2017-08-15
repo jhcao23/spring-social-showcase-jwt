@@ -1,7 +1,7 @@
 package org.springframework.security.web.authentication;
 
-import static technology.touchmars.showcase.service.JwtTokenService.AUTH_HEADER_NAME;
-import static technology.touchmars.showcase.service.JwtTokenService.getToken4User;
+import static technology.touchmars.template.service.JwtTokenService.AUTH_HEADER_NAME;
+import static technology.touchmars.template.service.JwtTokenService.getToken4User;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -16,8 +16,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.JwtRedirectStrategy;
 import org.springframework.util.StringUtils;
 
-import technology.touchmars.showcase.model.TouchUser;
-import technology.touchmars.showcase.repository.UserRepository;
+import technology.touchmars.template.model.TouchUser;
+import technology.touchmars.template.repository.UserRepository;
 
 /**
  * rather than extending the SavedRequestAwareAuthenticationSuccessHandler,

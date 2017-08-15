@@ -30,7 +30,7 @@ logging:
   file: showcase.log
   level:
     org.springframework.social: TRACE
-    technology.touchmars.showcase: TRACE    
+    technology.touchmars.template: TRACE    
     org.thymeleaf: TRACE
     org.springframework.security: TRACE
     org.springframework.security.web: TRACE
@@ -38,5 +38,6 @@ logging:
     org.springframework.web.cors: TRACE  
 wechat:
   mini:
-    app-id: wxc9213fff88a427f0
-    secret: 2e6bc5e65e470acf77d545d72ad61d4a    
+    e2eat:
+      app-id: wxc9213fff88a427f0
+      secret: 2e6bc5e65e470acf77d545d72ad61d4a     

@@ -19,8 +19,8 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
-import technology.touchmars.showcase.service.JwtFullInfo;
-import technology.touchmars.showcase.service.JwtTokenService;
+import technology.touchmars.template.service.JwtFullInfo;
+import technology.touchmars.template.service.JwtTokenService;
 
 public class JwtAuthenticationFilter extends GenericFilterBean {
 
