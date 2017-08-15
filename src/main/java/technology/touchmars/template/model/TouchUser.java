@@ -43,10 +43,10 @@ public class TouchUser {
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = UserAuthority.class, mappedBy = "touchUser")
     private List<UserAuthority> userAuthorityCollection = new ArrayList<UserAuthority>();
 
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="touchUser")
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="touchUser")
 	private Set<UserConnection> userConnectionList = new HashSet<UserConnection>();
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="touchUser")
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="touchUser")
 	private Set<UserConnectionWechat> userConnectionWechatList = new HashSet<UserConnectionWechat>();
 	
 	@Transient

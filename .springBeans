@@ -7,7 +7,7 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
-		<config>java:technology.touchmars.template.Application</config>
+		<config>java:technology.touchmars.showcase.Application</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

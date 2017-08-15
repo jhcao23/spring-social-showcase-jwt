@@ -26,7 +26,7 @@ public class UserConnection extends ConnectionAttributes {
 		this.id = id;
 	}
 	
-	@ManyToOne(fetch=FetchType.LAZY, optional=false)
+	@ManyToOne(fetch=FetchType.EAGER, optional=false)
 	@JoinColumn(nullable=false, name="user_id")	
 	public TouchUser getTouchUser() {
 		return touchUser;
