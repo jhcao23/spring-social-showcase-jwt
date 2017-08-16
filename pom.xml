@@ -10,6 +10,7 @@
 		<java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
+        <touchmars-spring-template-version>0.0.1-SNAPSHOT</touchmars-spring-template-version>
         <swagger-core-version>1.5.12</swagger-core-version>
         <wechat.client.version>0.0.1.RELEASE</wechat.client.version>            
         <spring-cloud.version>Dalston.SR2</spring-cloud.version>  
@@ -24,6 +25,16 @@
     </parent>
     
     <dependencies>
+    		<dependency>
+    			<groupId>technology.touchmars</groupId>
+    			<artifactId>touchmars-spring-template</artifactId>
+    			<version>${touchmars-spring-template-version}</version>
+    		</dependency>
+    		<dependency>
+	    		<groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-spatial</artifactId>
+		    <version>${hibernate.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.social</groupId>
 			<artifactId>spring-social-security</artifactId>

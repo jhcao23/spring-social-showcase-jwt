@@ -18,8 +18,9 @@ spring:
       repositories:
         enabled: true        
   jpa:
-#    properties:
-#      hibernate:
+    properties:
+      hibernate:
+        dialect: org.hibernate.spatial.dialect.mysql.MySQL56SpatialDialect
 #        enable_lazy_load_no_trans: true
     show-sql: true
     hibernate:      
